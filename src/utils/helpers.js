@@ -17,14 +17,22 @@ export function getRouteById(routes, id) {
 export function formatDate(dateStr) {
   if (!dateStr) return "";
   const d = new Date(dateStr);
-  return d.toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
+  return d.toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
 }
 
 export function formatTime(isoOrTime) {
   if (!isoOrTime) return "";
   if (/^\d{2}:\d{2}/.test(isoOrTime)) return isoOrTime.slice(0, 5);
   const d = new Date(isoOrTime);
-  return d.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", hour12: false });
+  return d.toLocaleTimeString("en-GB", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
 }
 
 export function timeAgo(isoTs) {
@@ -61,6 +69,7 @@ export function statusBadgeClass(status) {
     cancelled: "bg-red-100 text-red-800 border border-red-200",
     on_duty: "bg-blue-100 text-blue-800 border border-blue-200",
   };
-  const base = "inline-flex items-center px-2 py-0.5 rounded text-xs font-medium";
+  const base =
+    "inline-flex items-center px-2 py-0.5 rounded text-xs font-medium";
   return `${base} ${map[status] ?? "bg-slate-100 text-slate-600 border border-slate-200"}`;
 }

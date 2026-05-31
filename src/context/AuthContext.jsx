@@ -19,7 +19,7 @@ export function AuthProvider({ children }) {
 
   function login(username, password) {
     const found = usersData.find(
-      (u) => u.username === username && u.password === password
+      (u) => u.username === username && u.password === password,
     );
     if (!found) return false;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(found));

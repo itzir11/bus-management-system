@@ -3,7 +3,7 @@
     "id": "S01",
     "name": "Noida City Centre Metro",
     "lat": 28.5355,
-    "lng": 77.3910
+    "lng": 77.391
   },
   {
     "id": "S02",
@@ -20,7 +20,7 @@
   {
     "id": "S04",
     "name": "Noida Sector 62 Metro",
-    "lat": 28.6270,
+    "lat": 28.627,
     "lng": 77.3714
   },
   {
@@ -93,7 +93,7 @@
     "id": "S16",
     "name": "Noida Sector 52 Crossing",
     "lat": 28.6234,
-    "lng": 77.3580
+    "lng": 77.358
   },
   {
     "id": "S17",

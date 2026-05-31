@@ -40,8 +40,18 @@ export default function Login() {
         <div className="bg-white rounded-2xl shadow-md border border-slate-200 overflow-hidden">
           <div className="bg-slate-800 px-8 py-6 text-center">
             <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-blue-600 mb-3">
-              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              <svg
+                className="w-6 h-6 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
               </svg>
             </div>
             <h1 className="text-xl font-bold text-white tracking-tight">
@@ -54,7 +64,10 @@ export default function Login() {
             <form onSubmit={handleSubmit} noValidate>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1" htmlFor="username">
+                  <label
+                    className="block text-sm font-medium text-slate-700 mb-1"
+                    htmlFor="username"
+                  >
                     Username
                   </label>
                   <input
@@ -71,7 +84,10 @@ export default function Login() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1" htmlFor="password">
+                  <label
+                    className="block text-sm font-medium text-slate-700 mb-1"
+                    htmlFor="password"
+                  >
                     Password
                   </label>
                   <input
@@ -89,8 +105,16 @@ export default function Login() {
 
               {error && (
                 <div className="mt-4 flex items-center gap-2 px-3 py-2.5 rounded-lg bg-red-50 border border-red-200">
-                  <svg className="w-4 h-4 text-red-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                  <svg
+                    className="w-4 h-4 text-red-500 flex-shrink-0"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                      clipRule="evenodd"
+                    />
                   </svg>
                   <span className="text-sm text-red-700">{error}</span>
                 </div>
@@ -121,8 +145,12 @@ export default function Login() {
                     }}
                     className="text-left px-3 py-2 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 transition"
                   >
-                    <span className="block text-xs font-semibold text-slate-700">{role}</span>
-                    <span className="block text-xs text-slate-500 font-mono">{u}</span>
+                    <span className="block text-xs font-semibold text-slate-700">
+                      {role}
+                    </span>
+                    <span className="block text-xs text-slate-500 font-mono">
+                      {u}
+                    </span>
                   </button>
                 ))}
               </div>

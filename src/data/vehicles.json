@@ -1,25 +1,165 @@
 [
-  { "id": "V01", "reg_no": "UP16AT1001", "depot_id": "D1", "type": "AC",     "capacity": 40, "status": "active" },
-  { "id": "V02", "reg_no": "UP16AT1002", "depot_id": "D1", "type": "Non-AC", "capacity": 60, "status": "active" },
-  { "id": "V03", "reg_no": "UP16AT1003", "depot_id": "D1", "type": "AC",     "capacity": 40, "status": "maintenance" },
-  { "id": "V04", "reg_no": "UP16AT1004", "depot_id": "D1", "type": "Non-AC", "capacity": 60, "status": "active" },
-  { "id": "V05", "reg_no": "UP16AT1005", "depot_id": "D1", "type": "Non-AC", "capacity": 60, "status": "idle" },
+  {
+    "id": "V01",
+    "reg_no": "UP16AT1001",
+    "depot_id": "D1",
+    "type": "AC",
+    "capacity": 40,
+    "status": "active"
+  },
+  {
+    "id": "V02",
+    "reg_no": "UP16AT1002",
+    "depot_id": "D1",
+    "type": "Non-AC",
+    "capacity": 60,
+    "status": "active"
+  },
+  {
+    "id": "V03",
+    "reg_no": "UP16AT1003",
+    "depot_id": "D1",
+    "type": "AC",
+    "capacity": 40,
+    "status": "maintenance"
+  },
+  {
+    "id": "V04",
+    "reg_no": "UP16AT1004",
+    "depot_id": "D1",
+    "type": "Non-AC",
+    "capacity": 60,
+    "status": "active"
+  },
+  {
+    "id": "V05",
+    "reg_no": "UP16AT1005",
+    "depot_id": "D1",
+    "type": "Non-AC",
+    "capacity": 60,
+    "status": "idle"
+  },
 
-  { "id": "V06", "reg_no": "UP14BK2001", "depot_id": "D2", "type": "AC",     "capacity": 40, "status": "active" },
-  { "id": "V07", "reg_no": "UP14BK2002", "depot_id": "D2", "type": "Non-AC", "capacity": 60, "status": "active" },
-  { "id": "V08", "reg_no": "UP14BK2003", "depot_id": "D2", "type": "AC",     "capacity": 40, "status": "active" },
-  { "id": "V09", "reg_no": "UP14BK2004", "depot_id": "D2", "type": "Non-AC", "capacity": 60, "status": "maintenance" },
-  { "id": "V10", "reg_no": "UP14BK2005", "depot_id": "D2", "type": "Non-AC", "capacity": 60, "status": "idle" },
+  {
+    "id": "V06",
+    "reg_no": "UP14BK2001",
+    "depot_id": "D2",
+    "type": "AC",
+    "capacity": 40,
+    "status": "active"
+  },
+  {
+    "id": "V07",
+    "reg_no": "UP14BK2002",
+    "depot_id": "D2",
+    "type": "Non-AC",
+    "capacity": 60,
+    "status": "active"
+  },
+  {
+    "id": "V08",
+    "reg_no": "UP14BK2003",
+    "depot_id": "D2",
+    "type": "AC",
+    "capacity": 40,
+    "status": "active"
+  },
+  {
+    "id": "V09",
+    "reg_no": "UP14BK2004",
+    "depot_id": "D2",
+    "type": "Non-AC",
+    "capacity": 60,
+    "status": "maintenance"
+  },
+  {
+    "id": "V10",
+    "reg_no": "UP14BK2005",
+    "depot_id": "D2",
+    "type": "Non-AC",
+    "capacity": 60,
+    "status": "idle"
+  },
 
-  { "id": "V11", "reg_no": "UP11CX3001", "depot_id": "D3", "type": "AC",     "capacity": 40, "status": "active" },
-  { "id": "V12", "reg_no": "UP11CX3002", "depot_id": "D3", "type": "Non-AC", "capacity": 60, "status": "active" },
-  { "id": "V13", "reg_no": "UP11CX3003", "depot_id": "D3", "type": "Non-AC", "capacity": 60, "status": "active" },
-  { "id": "V14", "reg_no": "UP11CX3004", "depot_id": "D3", "type": "AC",     "capacity": 40, "status": "maintenance" },
-  { "id": "V15", "reg_no": "UP11CX3005", "depot_id": "D3", "type": "Non-AC", "capacity": 60, "status": "idle" },
+  {
+    "id": "V11",
+    "reg_no": "UP11CX3001",
+    "depot_id": "D3",
+    "type": "AC",
+    "capacity": 40,
+    "status": "active"
+  },
+  {
+    "id": "V12",
+    "reg_no": "UP11CX3002",
+    "depot_id": "D3",
+    "type": "Non-AC",
+    "capacity": 60,
+    "status": "active"
+  },
+  {
+    "id": "V13",
+    "reg_no": "UP11CX3003",
+    "depot_id": "D3",
+    "type": "Non-AC",
+    "capacity": 60,
+    "status": "active"
+  },
+  {
+    "id": "V14",
+    "reg_no": "UP11CX3004",
+    "depot_id": "D3",
+    "type": "AC",
+    "capacity": 40,
+    "status": "maintenance"
+  },
+  {
+    "id": "V15",
+    "reg_no": "UP11CX3005",
+    "depot_id": "D3",
+    "type": "Non-AC",
+    "capacity": 60,
+    "status": "idle"
+  },
 
-  { "id": "V16", "reg_no": "UP13DM4001", "depot_id": "D4", "type": "AC",     "capacity": 40, "status": "active" },
-  { "id": "V17", "reg_no": "UP13DM4002", "depot_id": "D4", "type": "Non-AC", "capacity": 60, "status": "active" },
-  { "id": "V18", "reg_no": "UP13DM4003", "depot_id": "D4", "type": "AC",     "capacity": 40, "status": "active" },
-  { "id": "V19", "reg_no": "UP13DM4004", "depot_id": "D4", "type": "Non-AC", "capacity": 60, "status": "idle" },
-  { "id": "V20", "reg_no": "UP13DM4005", "depot_id": "D4", "type": "Non-AC", "capacity": 60, "status": "maintenance" }
+  {
+    "id": "V16",
+    "reg_no": "UP13DM4001",
+    "depot_id": "D4",
+    "type": "AC",
+    "capacity": 40,
+    "status": "active"
+  },
+  {
+    "id": "V17",
+    "reg_no": "UP13DM4002",
+    "depot_id": "D4",
+    "type": "Non-AC",
+    "capacity": 60,
+    "status": "active"
+  },
+  {
+    "id": "V18",
+    "reg_no": "UP13DM4003",
+    "depot_id": "D4",
+    "type": "AC",
+    "capacity": 40,
+    "status": "active"
+  },
+  {
+    "id": "V19",
+    "reg_no": "UP13DM4004",
+    "depot_id": "D4",
+    "type": "Non-AC",
+    "capacity": 60,
+    "status": "idle"
+  },
+  {
+    "id": "V20",
+    "reg_no": "UP13DM4005",
+    "depot_id": "D4",
+    "type": "Non-AC",
+    "capacity": 60,
+    "status": "maintenance"
+  }
 ]

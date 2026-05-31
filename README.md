@@ -12,12 +12,12 @@ A frontend-only capstone project for managing NCRTC's feeder bus network around 
 
 ## Modules
 
-| Module | Description |
-|--------|-------------|
-| AVLS | Live map of all buses + trip history |
-| Scheduling | Routes, roster grid, driver duties |
-| IMS | Incident raise, triage, and resolution |
-| CMS | Notices from admin to drivers |
+| Module     | Description                            |
+| ---------- | -------------------------------------- |
+| AVLS       | Live map of all buses + trip history   |
+| Scheduling | Routes, roster grid, driver duties     |
+| IMS        | Incident raise, triage, and resolution |
+| CMS        | Notices from admin to drivers          |
 
 ## Getting Started
 
@@ -30,11 +30,11 @@ App runs at `http://localhost:5173`
 
 ## Demo Credentials
 
-| Role | Username | Password |
-|------|----------|----------|
-| Admin | `admin` | `admin123` |
-| Depot Manager | `manager1` | `password` |
+| Role             | Username    | Password   |
+| ---------------- | ----------- | ---------- |
+| Admin            | `admin`     | `admin123` |
+| Depot Manager    | `manager1`  | `password` |
 | Control Operator | `operator1` | `password` |
-| Driver | `driver1` | `password` |
+| Driver           | `driver1`   | `password` |
 
 > These are demo-only credentials seeded in `src/data/users.json`.

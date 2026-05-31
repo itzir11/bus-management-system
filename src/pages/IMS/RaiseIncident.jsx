@@ -16,7 +16,9 @@ export default function RaiseIncident() {
   const [severity, setSeverity] = useState("P2");
   const [description, setDescription] = useState("");
   const [vehicleId, setVehicleId] = useState("");
-  const [depotId, setDepotId] = useState(canPickDepot ? "" : (user?.depot_id ?? ""));
+  const [depotId, setDepotId] = useState(
+    canPickDepot ? "" : (user?.depot_id ?? ""),
+  );
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
 
@@ -25,8 +27,8 @@ export default function RaiseIncident() {
   const depotVehicles = depotId
     ? vehicles.filter((v) => v.depot_id === depotId)
     : canPickDepot
-    ? vehicles
-    : vehicles.filter((v) => v.depot_id === user.depot_id);
+      ? vehicles
+      : vehicles.filter((v) => v.depot_id === user.depot_id);
 
   function validate() {
     const e = {};
@@ -72,21 +74,38 @@ export default function RaiseIncident() {
             onClick={() => navigate("/ims")}
             className="flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-700 transition-colors"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 19l-7-7 7-7"
+              />
             </svg>
             Incidents
           </button>
           <span className="text-slate-300">/</span>
-          <span className="text-sm font-medium text-slate-700">Raise Incident</span>
+          <span className="text-sm font-medium text-slate-700">
+            Raise Incident
+          </span>
         </div>
 
         <div>
           <h1 className="text-xl font-bold text-slate-800">Raise Incident</h1>
-          <p className="text-sm text-slate-500 mt-0.5">Report a new operational incident.</p>
+          <p className="text-sm text-slate-500 mt-0.5">
+            Report a new operational incident.
+          </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 space-y-5">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 space-y-5"
+        >
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-slate-600 mb-1">
@@ -102,7 +121,9 @@ export default function RaiseIncident() {
                 <option value="complaint">Complaint</option>
                 <option value="other">Other</option>
               </select>
-              {errors.type && <p className="text-xs text-red-500 mt-1">{errors.type}</p>}
+              {errors.type && (
+                <p className="text-xs text-red-500 mt-1">{errors.type}</p>
+              )}
             </div>
 
             <div>
@@ -118,7 +139,9 @@ export default function RaiseIncident() {
                 <option value="P2">P2 — Major</option>
                 <option value="P3">P3 — Minor</option>
               </select>
-              {errors.severity && <p className="text-xs text-red-500 mt-1">{errors.severity}</p>}
+              {errors.severity && (
+                <p className="text-xs text-red-500 mt-1">{errors.severity}</p>
+              )}
             </div>
           </div>
 
@@ -128,12 +151,17 @@ export default function RaiseIncident() {
             </label>
             <textarea
               value={description}
-              onChange={(e) => { setDescription(e.target.value); setErrors((p) => ({ ...p, description: undefined })); }}
+              onChange={(e) => {
+                setDescription(e.target.value);
+                setErrors((p) => ({ ...p, description: undefined }));
+              }}
               rows={4}
               placeholder="Describe the incident in detail..."
               className={`w-full text-sm border rounded-lg px-3 py-2 bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none ${errors.description ? "border-red-300" : "border-slate-200"}`}
             />
-            {errors.description && <p className="text-xs text-red-500 mt-1">{errors.description}</p>}
+            {errors.description && (
+              <p className="text-xs text-red-500 mt-1">{errors.description}</p>
+            )}
           </div>
 
           {canPickDepot ? (
@@ -143,27 +171,40 @@ export default function RaiseIncident() {
               </label>
               <select
                 value={depotId}
-                onChange={(e) => { setDepotId(e.target.value); setVehicleId(""); setErrors((p) => ({ ...p, depotId: undefined })); }}
+                onChange={(e) => {
+                  setDepotId(e.target.value);
+                  setVehicleId("");
+                  setErrors((p) => ({ ...p, depotId: undefined }));
+                }}
                 className={`w-full text-sm border rounded-lg px-3 py-2 bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.depotId ? "border-red-300" : "border-slate-200"}`}
               >
                 <option value="">Select depot...</option>
                 {depots.map((d) => (
-                  <option key={d.id} value={d.id}>{d.name}</option>
+                  <option key={d.id} value={d.id}>
+                    {d.name}
+                  </option>
                 ))}
               </select>
-              {errors.depotId && <p className="text-xs text-red-500 mt-1">{errors.depotId}</p>}
+              {errors.depotId && (
+                <p className="text-xs text-red-500 mt-1">{errors.depotId}</p>
+              )}
             </div>
           ) : (
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">Depot</label>
+              <label className="block text-xs font-medium text-slate-600 mb-1">
+                Depot
+              </label>
               <div className="text-sm text-slate-700 px-3 py-2 border border-slate-200 rounded-lg bg-slate-50">
-                {depots.find((d) => d.id === user.depot_id)?.name ?? user.depot_id}
+                {depots.find((d) => d.id === user.depot_id)?.name ??
+                  user.depot_id}
               </div>
             </div>
           )}
 
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">Vehicle (optional)</label>
+            <label className="block text-xs font-medium text-slate-600 mb-1">
+              Vehicle (optional)
+            </label>
             <select
               value={vehicleId}
               onChange={(e) => setVehicleId(e.target.value)}
@@ -171,7 +212,9 @@ export default function RaiseIncident() {
             >
               <option value="">— None / Not applicable —</option>
               {depotVehicles.map((v) => (
-                <option key={v.id} value={v.id}>{v.reg_no} ({v.type})</option>
+                <option key={v.id} value={v.id}>
+                  {v.reg_no} ({v.type})
+                </option>
               ))}
             </select>
           </div>

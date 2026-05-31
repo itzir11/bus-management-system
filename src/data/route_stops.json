@@ -1,30 +1,174 @@
 [
-  { "id": "RS001", "route_id": "R1", "stop_id": "S01", "sequence": 1, "planned_offset_min": 0 },
-  { "id": "RS002", "route_id": "R1", "stop_id": "S02", "sequence": 2, "planned_offset_min": 8 },
-  { "id": "RS003", "route_id": "R1", "stop_id": "S03", "sequence": 3, "planned_offset_min": 15 },
-  { "id": "RS004", "route_id": "R1", "stop_id": "S15", "sequence": 4, "planned_offset_min": 26 },
-  { "id": "RS005", "route_id": "R1", "stop_id": "S16", "sequence": 5, "planned_offset_min": 34 },
-  { "id": "RS006", "route_id": "R1", "stop_id": "S04", "sequence": 6, "planned_offset_min": 42 },
+  {
+    "id": "RS001",
+    "route_id": "R1",
+    "stop_id": "S01",
+    "sequence": 1,
+    "planned_offset_min": 0
+  },
+  {
+    "id": "RS002",
+    "route_id": "R1",
+    "stop_id": "S02",
+    "sequence": 2,
+    "planned_offset_min": 8
+  },
+  {
+    "id": "RS003",
+    "route_id": "R1",
+    "stop_id": "S03",
+    "sequence": 3,
+    "planned_offset_min": 15
+  },
+  {
+    "id": "RS004",
+    "route_id": "R1",
+    "stop_id": "S15",
+    "sequence": 4,
+    "planned_offset_min": 26
+  },
+  {
+    "id": "RS005",
+    "route_id": "R1",
+    "stop_id": "S16",
+    "sequence": 5,
+    "planned_offset_min": 34
+  },
+  {
+    "id": "RS006",
+    "route_id": "R1",
+    "stop_id": "S04",
+    "sequence": 6,
+    "planned_offset_min": 42
+  },
 
-  { "id": "RS007", "route_id": "R2", "stop_id": "S05", "sequence": 1, "planned_offset_min": 0 },
-  { "id": "RS008", "route_id": "R2", "stop_id": "S19", "sequence": 2, "planned_offset_min": 10 },
-  { "id": "RS009", "route_id": "R2", "stop_id": "S07", "sequence": 3, "planned_offset_min": 18 },
-  { "id": "RS010", "route_id": "R2", "stop_id": "S06", "sequence": 4, "planned_offset_min": 28 },
+  {
+    "id": "RS007",
+    "route_id": "R2",
+    "stop_id": "S05",
+    "sequence": 1,
+    "planned_offset_min": 0
+  },
+  {
+    "id": "RS008",
+    "route_id": "R2",
+    "stop_id": "S19",
+    "sequence": 2,
+    "planned_offset_min": 10
+  },
+  {
+    "id": "RS009",
+    "route_id": "R2",
+    "stop_id": "S07",
+    "sequence": 3,
+    "planned_offset_min": 18
+  },
+  {
+    "id": "RS010",
+    "route_id": "R2",
+    "stop_id": "S06",
+    "sequence": 4,
+    "planned_offset_min": 28
+  },
 
-  { "id": "RS011", "route_id": "R3", "stop_id": "S10", "sequence": 1, "planned_offset_min": 0 },
-  { "id": "RS012", "route_id": "R3", "stop_id": "S17", "sequence": 2, "planned_offset_min": 12 },
-  { "id": "RS013", "route_id": "R3", "stop_id": "S09", "sequence": 3, "planned_offset_min": 20 },
-  { "id": "RS014", "route_id": "R3", "stop_id": "S12", "sequence": 4, "planned_offset_min": 35 },
-  { "id": "RS015", "route_id": "R3", "stop_id": "S13", "sequence": 5, "planned_offset_min": 55 },
+  {
+    "id": "RS011",
+    "route_id": "R3",
+    "stop_id": "S10",
+    "sequence": 1,
+    "planned_offset_min": 0
+  },
+  {
+    "id": "RS012",
+    "route_id": "R3",
+    "stop_id": "S17",
+    "sequence": 2,
+    "planned_offset_min": 12
+  },
+  {
+    "id": "RS013",
+    "route_id": "R3",
+    "stop_id": "S09",
+    "sequence": 3,
+    "planned_offset_min": 20
+  },
+  {
+    "id": "RS014",
+    "route_id": "R3",
+    "stop_id": "S12",
+    "sequence": 4,
+    "planned_offset_min": 35
+  },
+  {
+    "id": "RS015",
+    "route_id": "R3",
+    "stop_id": "S13",
+    "sequence": 5,
+    "planned_offset_min": 55
+  },
 
-  { "id": "RS016", "route_id": "R4", "stop_id": "S07", "sequence": 1, "planned_offset_min": 0 },
-  { "id": "RS017", "route_id": "R4", "stop_id": "S05", "sequence": 2, "planned_offset_min": 7 },
-  { "id": "RS018", "route_id": "R4", "stop_id": "S19", "sequence": 3, "planned_offset_min": 16 },
-  { "id": "RS019", "route_id": "R4", "stop_id": "S03", "sequence": 4, "planned_offset_min": 26 },
-  { "id": "RS020", "route_id": "R4", "stop_id": "S02", "sequence": 5, "planned_offset_min": 35 },
+  {
+    "id": "RS016",
+    "route_id": "R4",
+    "stop_id": "S07",
+    "sequence": 1,
+    "planned_offset_min": 0
+  },
+  {
+    "id": "RS017",
+    "route_id": "R4",
+    "stop_id": "S05",
+    "sequence": 2,
+    "planned_offset_min": 7
+  },
+  {
+    "id": "RS018",
+    "route_id": "R4",
+    "stop_id": "S19",
+    "sequence": 3,
+    "planned_offset_min": 16
+  },
+  {
+    "id": "RS019",
+    "route_id": "R4",
+    "stop_id": "S03",
+    "sequence": 4,
+    "planned_offset_min": 26
+  },
+  {
+    "id": "RS020",
+    "route_id": "R4",
+    "stop_id": "S02",
+    "sequence": 5,
+    "planned_offset_min": 35
+  },
 
-  { "id": "RS021", "route_id": "R5", "stop_id": "S11", "sequence": 1, "planned_offset_min": 0 },
-  { "id": "RS022", "route_id": "R5", "stop_id": "S20", "sequence": 2, "planned_offset_min": 9 },
-  { "id": "RS023", "route_id": "R5", "stop_id": "S18", "sequence": 3, "planned_offset_min": 18 },
-  { "id": "RS024", "route_id": "R5", "stop_id": "S08", "sequence": 4, "planned_offset_min": 25 }
+  {
+    "id": "RS021",
+    "route_id": "R5",
+    "stop_id": "S11",
+    "sequence": 1,
+    "planned_offset_min": 0
+  },
+  {
+    "id": "RS022",
+    "route_id": "R5",
+    "stop_id": "S20",
+    "sequence": 2,
+    "planned_offset_min": 9
+  },
+  {
+    "id": "RS023",
+    "route_id": "R5",
+    "stop_id": "S18",
+    "sequence": 3,
+    "planned_offset_min": 18
+  },
+  {
+    "id": "RS024",
+    "route_id": "R5",
+    "stop_id": "S08",
+    "sequence": 4,
+    "planned_offset_min": 25
+  }
 ]

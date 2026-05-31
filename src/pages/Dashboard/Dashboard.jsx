@@ -25,8 +25,11 @@ function SeverityBadge({ severity }) {
     slate: "bg-slate-100 text-slate-600 border border-slate-200",
   };
   return (
-    <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${colorMap[color] ?? colorMap.slate}`}>
-      {severity} {SEVERITY_LABEL[severity] ? `· ${SEVERITY_LABEL[severity]}` : ""}
+    <span
+      className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${colorMap[color] ?? colorMap.slate}`}
+    >
+      {severity}{" "}
+      {SEVERITY_LABEL[severity] ? `· ${SEVERITY_LABEL[severity]}` : ""}
     </span>
   );
 }
@@ -34,7 +37,9 @@ function SeverityBadge({ severity }) {
 function IncidentsTable({ incidents, users, vehicles }) {
   if (!incidents.length) {
     return (
-      <div className="text-center py-10 text-slate-400 text-sm">No recent incidents.</div>
+      <div className="text-center py-10 text-slate-400 text-sm">
+        No recent incidents.
+      </div>
     );
   }
   return (
@@ -42,13 +47,27 @@ function IncidentsTable({ incidents, users, vehicles }) {
       <table className="w-full text-sm">
         <thead>
           <tr className="border-b border-slate-100">
-            <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">ID</th>
-            <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Type</th>
-            <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Severity</th>
-            <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Status</th>
-            <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Vehicle</th>
-            <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Raised By</th>
-            <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Time</th>
+            <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">
+              ID
+            </th>
+            <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">
+              Type
+            </th>
+            <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">
+              Severity
+            </th>
+            <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">
+              Status
+            </th>
+            <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">
+              Vehicle
+            </th>
+            <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">
+              Raised By
+            </th>
+            <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">
+              Time
+            </th>
           </tr>
         </thead>
         <tbody className="divide-y divide-slate-50">
@@ -57,8 +76,12 @@ function IncidentsTable({ incidents, users, vehicles }) {
             const raiser = getUserById(users, inc.raised_by);
             return (
               <tr key={inc.id} className="hover:bg-slate-50 transition-colors">
-                <td className="px-4 py-3 font-mono text-xs text-slate-500">{inc.id}</td>
-                <td className="px-4 py-3 capitalize text-slate-700">{inc.type.replace("_", " ")}</td>
+                <td className="px-4 py-3 font-mono text-xs text-slate-500">
+                  {inc.id}
+                </td>
+                <td className="px-4 py-3 capitalize text-slate-700">
+                  {inc.type.replace("_", " ")}
+                </td>
                 <td className="px-4 py-3">
                   <SeverityBadge severity={inc.severity} />
                 </td>
@@ -87,15 +110,8 @@ function IncidentsTable({ incidents, users, vehicles }) {
 
 export default function Dashboard() {
   const { user } = useAuth();
-  const {
-    vehicles,
-    duties,
-    incidents,
-    notices,
-    noticeReads,
-    users,
-    depots,
-  } = useData();
+  const { vehicles, duties, incidents, notices, noticeReads, users, depots } =
+    useData();
 
   if (!user) return null;
 
@@ -122,11 +138,11 @@ export default function Dashboard() {
     : users;
 
   const activeDutiesToday = filteredDuties.filter(
-    (d) => d.date === TODAY && d.status !== "draft"
+    (d) => d.date === TODAY && d.status !== "draft",
   ).length;
 
   const openIncidents = filteredIncidents.filter(
-    (i) => i.status === "open" || i.status === "acknowledged"
+    (i) => i.status === "open" || i.status === "acknowledged",
   ).length;
 
   const totalDrivers = filteredUsers.filter((u) => u.role === "driver").length;
@@ -135,7 +151,7 @@ export default function Dashboard() {
     const isPublished = !n.publish_at || new Date(n.publish_at) <= new Date();
     if (!isPublished) return false;
     const isRead = noticeReads.some(
-      (r) => r.notice_id === n.id && r.user_id === user.id
+      (r) => r.notice_id === n.id && r.user_id === user.id,
     );
     return !isRead;
   }).length;
@@ -153,12 +169,12 @@ export default function Dashboard() {
         <h1 className="text-xl font-bold text-slate-800">
           Dashboard
           {depotLabel && (
-            <span className="ml-2 text-base font-normal text-slate-500">— {depotLabel}</span>
+            <span className="ml-2 text-base font-normal text-slate-500">
+              — {depotLabel}
+            </span>
           )}
         </h1>
-        <p className="text-sm text-slate-500 mt-0.5">
-          {formatDate(TODAY)}
-        </p>
+        <p className="text-sm text-slate-500 mt-0.5">{formatDate(TODAY)}</p>
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -194,18 +210,25 @@ export default function Dashboard() {
 
       {unreadNoticesCount > 0 && (
         <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-amber-50 border border-amber-200">
-          <svg className="w-5 h-5 text-amber-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+          <svg
+            className="w-5 h-5 text-amber-500 flex-shrink-0"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
             <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zm0 16a2 2 0 01-2-2h4a2 2 0 01-2 2z" />
           </svg>
           <span className="text-sm text-amber-800 font-medium">
-            You have {unreadNoticesCount} unread notice{unreadNoticesCount !== 1 ? "s" : ""}.
+            You have {unreadNoticesCount} unread notice
+            {unreadNoticesCount !== 1 ? "s" : ""}.
           </span>
         </div>
       )}
 
       <div className="bg-white rounded-xl shadow-sm border border-slate-200">
         <div className="px-4 py-4 border-b border-slate-100 flex items-center justify-between">
-          <h2 className="text-base font-semibold text-slate-800">Recent Incidents</h2>
+          <h2 className="text-base font-semibold text-slate-800">
+            Recent Incidents
+          </h2>
           <span className="text-xs text-slate-400">Last 5</span>
         </div>
         <IncidentsTable

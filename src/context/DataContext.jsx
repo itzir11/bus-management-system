@@ -46,7 +46,7 @@ export function DataProvider({ children }) {
     setMutable((prev) => ({
       ...prev,
       duties: prev.duties.map((d) =>
-        d.id === updatedDuty.id ? updatedDuty : d
+        d.id === updatedDuty.id ? updatedDuty : d,
       ),
     }));
   }
@@ -69,7 +69,7 @@ export function DataProvider({ children }) {
     setMutable((prev) => ({
       ...prev,
       incidents: prev.incidents.map((i) =>
-        i.id === updatedIncident.id ? updatedIncident : i
+        i.id === updatedIncident.id ? updatedIncident : i,
       ),
     }));
   }
@@ -83,7 +83,7 @@ export function DataProvider({ children }) {
 
   function markNoticeRead(noticeId, userId) {
     const alreadyRead = mutable.noticeReads.some(
-      (r) => r.notice_id === noticeId && r.user_id === userId
+      (r) => r.notice_id === noticeId && r.user_id === userId,
     );
     if (alreadyRead) return;
     const newRead = {

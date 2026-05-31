@@ -21,7 +21,9 @@ const SEVERITY_COLORS = {
 function SeverityBadge({ severity }) {
   const color = severityColor(severity);
   return (
-    <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${SEVERITY_COLORS[color] ?? SEVERITY_COLORS.slate}`}>
+    <span
+      className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${SEVERITY_COLORS[color] ?? SEVERITY_COLORS.slate}`}
+    >
       {severity}
     </span>
   );
@@ -39,7 +41,10 @@ export default function IMSPage() {
   if (!user) return null;
 
   const isDepotManager = user.role === "depot_manager";
-  const canAssign = user.role === "admin" || user.role === "control_operator" || user.role === "depot_manager";
+  const canAssign =
+    user.role === "admin" ||
+    user.role === "control_operator" ||
+    user.role === "depot_manager";
 
   const baseIncidents = isDepotManager
     ? incidents.filter((i) => i.depot_id === user.depot_id)
@@ -47,13 +52,14 @@ export default function IMSPage() {
 
   const filtered = baseIncidents.filter((inc) => {
     if (statusFilter !== "all" && inc.status !== statusFilter) return false;
-    if (severityFilter !== "all" && inc.severity !== severityFilter) return false;
+    if (severityFilter !== "all" && inc.severity !== severityFilter)
+      return false;
     if (mineOnly && inc.raised_by !== user.id) return false;
     return true;
   });
 
   const sorted = [...filtered].sort(
-    (a, b) => new Date(b.created_at) - new Date(a.created_at)
+    (a, b) => new Date(b.created_at) - new Date(a.created_at),
   );
 
   function handleAssign(e, inc) {
@@ -66,14 +72,26 @@ export default function IMSPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-xl font-bold text-slate-800">Incidents</h1>
-          <p className="text-sm text-slate-500 mt-0.5">Track and manage operational incidents.</p>
+          <p className="text-sm text-slate-500 mt-0.5">
+            Track and manage operational incidents.
+          </p>
         </div>
         <Link
           to="/ims/raise"
           className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors"
         >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+          <svg
+            className="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 4v16m8-8H4"
+            />
           </svg>
           Raise Incident
         </Link>
@@ -127,26 +145,56 @@ export default function IMSPage() {
         {sorted.length === 0 ? (
           <div className="py-16 text-center">
             <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-3">
-              <svg className="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              <svg
+                className="w-6 h-6 text-slate-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.5}
+                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                />
               </svg>
             </div>
-            <p className="text-sm font-medium text-slate-600">No incidents found</p>
-            <p className="text-xs text-slate-400 mt-1">Try adjusting your filters.</p>
+            <p className="text-sm font-medium text-slate-600">
+              No incidents found
+            </p>
+            <p className="text-xs text-slate-400 mt-1">
+              Try adjusting your filters.
+            </p>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-slate-100 bg-slate-50">
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">ID</th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Type</th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Severity</th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Status</th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Vehicle</th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Depot</th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Raised By</th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">Time</th>
+                  <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">
+                    ID
+                  </th>
+                  <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">
+                    Type
+                  </th>
+                  <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">
+                    Severity
+                  </th>
+                  <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">
+                    Status
+                  </th>
+                  <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">
+                    Vehicle
+                  </th>
+                  <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">
+                    Depot
+                  </th>
+                  <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">
+                    Raised By
+                  </th>
+                  <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">
+                    Time
+                  </th>
                   <th className="px-4 py-3"></th>
                 </tr>
               </thead>
@@ -155,15 +203,21 @@ export default function IMSPage() {
                   const vehicle = getVehicleById(vehicles, inc.vehicle_id);
                   const raiser = getUserById(users, inc.raised_by);
                   const depot = getDepotById(depots, inc.depot_id);
-                  const isAssignable = canAssign && (inc.status === "open" || inc.status === "acknowledged");
+                  const isAssignable =
+                    canAssign &&
+                    (inc.status === "open" || inc.status === "acknowledged");
                   return (
                     <tr
                       key={inc.id}
                       onClick={() => navigate(`/ims/${inc.id}`)}
                       className="hover:bg-slate-50 cursor-pointer transition-colors"
                     >
-                      <td className="px-4 py-3 font-mono text-xs text-slate-500 whitespace-nowrap">{inc.id}</td>
-                      <td className="px-4 py-3 capitalize text-slate-700">{inc.type.replace("_", " ")}</td>
+                      <td className="px-4 py-3 font-mono text-xs text-slate-500 whitespace-nowrap">
+                        {inc.id}
+                      </td>
+                      <td className="px-4 py-3 capitalize text-slate-700">
+                        {inc.type.replace("_", " ")}
+                      </td>
                       <td className="px-4 py-3">
                         <SeverityBadge severity={inc.severity} />
                       </td>

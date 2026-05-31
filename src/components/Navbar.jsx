@@ -65,7 +65,7 @@ export default function Navbar({ onMenuToggle }) {
       </button>
 
       <div className="hidden md:flex items-center gap-2 text-sm text-slate-400 select-none">
-        <span className="font-semibold text-slate-900">NCRTC BMS</span>
+        <span className="font-semibold text-slate-900">Bus Management System</span>
         <svg
           width="14"
           height="14"
@@ -79,7 +79,7 @@ export default function Navbar({ onMenuToggle }) {
         >
           <polyline points="9 18 15 12 9 6" />
         </svg>
-        <span className="text-slate-500">Fleet Management</span>
+        <span className="text-slate-500">by Ishika Rohilla</span>
       </div>
 
       <div className="ml-auto flex items-center gap-3">

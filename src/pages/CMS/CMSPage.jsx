@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useData } from "../../context/DataContext";
 import { getUserById, formatDate, timeAgo } from "../../utils/helpers";
@@ -189,7 +188,7 @@ function CreateNoticeModal({ onClose, onSave, createdBy }) {
   );
 }
 
-function ReadReceiptsPanel({ notice, users, noticeReads, allDrivers }) {
+function ReadReceiptsPanel({ notice, noticeReads, allDrivers }) {
   const receipts = noticeReads.filter((r) => r.notice_id === notice.id);
   const readMap = Object.fromEntries(
     receipts.map((r) => [r.user_id, r.read_at]),
@@ -424,7 +423,6 @@ function AdminView({ user, notices, noticeReads, users, addNotice }) {
                           <td colSpan={7} className="p-0">
                             <ReadReceiptsPanel
                               notice={notice}
-                              users={users}
                               noticeReads={noticeReads}
                               allDrivers={audienceDrivers}
                             />

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useData } from "../../context/DataContext";
@@ -67,6 +67,7 @@ export default function IncidentDetail() {
   const [note, setNote] = useState("");
   const [assignTo, setAssignTo] = useState("");
   const [statusError, setStatusError] = useState("");
+  const eventIdCounter = useRef(0);
 
   if (!user) return null;
 
@@ -126,8 +127,9 @@ export default function IncidentDetail() {
 
     updateIncident({ ...incident, ...changes });
 
+    eventIdCounter.current += 1;
     addIncidentEvent({
-      id: `IE${Date.now()}`,
+      id: `IE-${id}-${eventIdCounter.current}`,
       incident_id: incident.id,
       ts: now,
       actor_id: user.id,

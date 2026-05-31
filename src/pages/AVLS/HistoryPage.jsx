@@ -84,7 +84,6 @@ export default function HistoryPage() {
   );
 
   const firstPing = filteredPings[0] ?? null;
-  const lastPing = filteredPings[filteredPings.length - 1] ?? null;
 
   const mapCenter = firstPing ? [firstPing.lat, firstPing.lng] : [28.57, 77.32];
 

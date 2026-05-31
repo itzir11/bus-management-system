@@ -222,10 +222,10 @@ export default function Sidebar({ isOpen, onClose }) {
             </div>
             <div className="flex flex-col leading-tight">
               <span className="text-white font-bold text-sm tracking-wide select-none">
-                NCRTC BMS
+                BMS
               </span>
               <span className="text-slate-400 text-[10px] leading-none tracking-wide select-none">
-                Fleet Management
+                by Ishika Rohilla
               </span>
             </div>
           </div>

@@ -55,7 +55,7 @@ export default function Login() {
               </svg>
             </div>
             <h1 className="text-xl font-bold text-white tracking-tight">
-              NCRTC Bus Management System
+              Bus Management System
             </h1>
             <p className="text-slate-400 text-sm mt-1">Control Room Portal</p>
           </div>
@@ -159,7 +159,7 @@ export default function Login() {
         </div>
 
         <p className="text-center text-xs text-slate-400 mt-4">
-          NCRTC &mdash; National Capital Region Transport Corporation
+          Bus Management System &mdash; by Ishika Rohilla
         </p>
       </div>
     </div>

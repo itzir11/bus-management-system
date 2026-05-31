@@ -38,10 +38,6 @@ export function DataProvider({ children }) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(mutable));
   }, [mutable]);
 
-  function updateMutable(patch) {
-    setMutable((prev) => ({ ...prev, ...patch }));
-  }
-
   function updateDuty(updatedDuty) {
     setMutable((prev) => ({
       ...prev,
@@ -122,6 +118,7 @@ export function DataProvider({ children }) {
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useData() {
   return useContext(DataContext);
 }

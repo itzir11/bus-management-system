@@ -1,0 +1,227 @@
+[
+  {
+    "id": "U01",
+    "username": "admin",
+    "password": "admin123",
+    "full_name": "Rajesh Kumar",
+    "role": "admin",
+    "depot_id": null,
+    "phone": "9811001001"
+  },
+  {
+    "id": "U02",
+    "username": "admin2",
+    "password": "admin123",
+    "full_name": "Priya Sharma",
+    "role": "admin",
+    "depot_id": null,
+    "phone": "9811001002"
+  },
+  {
+    "id": "U03",
+    "username": "operator1",
+    "password": "password",
+    "full_name": "Amit Verma",
+    "role": "control_operator",
+    "depot_id": null,
+    "phone": "9811002001"
+  },
+  {
+    "id": "U04",
+    "username": "operator2",
+    "password": "password",
+    "full_name": "Sunita Rao",
+    "role": "control_operator",
+    "depot_id": null,
+    "phone": "9811002002"
+  },
+  {
+    "id": "U05",
+    "username": "operator3",
+    "password": "password",
+    "full_name": "Deepak Singh",
+    "role": "control_operator",
+    "depot_id": null,
+    "phone": "9811002003"
+  },
+  {
+    "id": "U06",
+    "username": "manager1",
+    "password": "password",
+    "full_name": "Vinod Gupta",
+    "role": "depot_manager",
+    "depot_id": "D1",
+    "phone": "9811003001"
+  },
+  {
+    "id": "U07",
+    "username": "manager2",
+    "password": "password",
+    "full_name": "Kavita Mishra",
+    "role": "depot_manager",
+    "depot_id": "D2",
+    "phone": "9811003002"
+  },
+  {
+    "id": "U08",
+    "username": "manager3",
+    "password": "password",
+    "full_name": "Suresh Yadav",
+    "role": "depot_manager",
+    "depot_id": "D3",
+    "phone": "9811003003"
+  },
+  {
+    "id": "U09",
+    "username": "manager4",
+    "password": "password",
+    "full_name": "Neeta Pandey",
+    "role": "depot_manager",
+    "depot_id": "D4",
+    "phone": "9811003004"
+  },
+  {
+    "id": "U10",
+    "username": "driver1",
+    "password": "password",
+    "full_name": "Ramesh Chauhan",
+    "role": "driver",
+    "depot_id": "D1",
+    "phone": "9811004001"
+  },
+  {
+    "id": "U11",
+    "username": "driver2",
+    "password": "password",
+    "full_name": "Sanjay Tiwari",
+    "role": "driver",
+    "depot_id": "D1",
+    "phone": "9811004002"
+  },
+  {
+    "id": "U12",
+    "username": "driver3",
+    "password": "password",
+    "full_name": "Mohan Lal",
+    "role": "driver",
+    "depot_id": "D1",
+    "phone": "9811004003"
+  },
+  {
+    "id": "U13",
+    "username": "driver4",
+    "password": "password",
+    "full_name": "Harish Bajpai",
+    "role": "driver",
+    "depot_id": "D1",
+    "phone": "9811004004"
+  },
+  {
+    "id": "U14",
+    "username": "driver5",
+    "password": "password",
+    "full_name": "Arjun Tripathi",
+    "role": "driver",
+    "depot_id": "D2",
+    "phone": "9811005001"
+  },
+  {
+    "id": "U15",
+    "username": "driver6",
+    "password": "password",
+    "full_name": "Pankaj Dubey",
+    "role": "driver",
+    "depot_id": "D2",
+    "phone": "9811005002"
+  },
+  {
+    "id": "U16",
+    "username": "driver7",
+    "password": "password",
+    "full_name": "Ravi Shankar",
+    "role": "driver",
+    "depot_id": "D2",
+    "phone": "9811005003"
+  },
+  {
+    "id": "U17",
+    "username": "driver8",
+    "password": "password",
+    "full_name": "Anil Kumar",
+    "role": "driver",
+    "depot_id": "D2",
+    "phone": "9811005004"
+  },
+  {
+    "id": "U18",
+    "username": "driver9",
+    "password": "password",
+    "full_name": "Manoj Srivastava",
+    "role": "driver",
+    "depot_id": "D3",
+    "phone": "9811006001"
+  },
+  {
+    "id": "U19",
+    "username": "driver10",
+    "password": "password",
+    "full_name": "Dinesh Chandra",
+    "role": "driver",
+    "depot_id": "D3",
+    "phone": "9811006002"
+  },
+  {
+    "id": "U20",
+    "username": "driver11",
+    "password": "password",
+    "full_name": "Rakesh Pathak",
+    "role": "driver",
+    "depot_id": "D3",
+    "phone": "9811006003"
+  },
+  {
+    "id": "U21",
+    "username": "driver12",
+    "password": "password",
+    "full_name": "Santosh Jha",
+    "role": "driver",
+    "depot_id": "D3",
+    "phone": "9811006004"
+  },
+  {
+    "id": "U22",
+    "username": "driver13",
+    "password": "password",
+    "full_name": "Vijay Maurya",
+    "role": "driver",
+    "depot_id": "D4",
+    "phone": "9811007001"
+  },
+  {
+    "id": "U23",
+    "username": "driver14",
+    "password": "password",
+    "full_name": "Sunil Gautam",
+    "role": "driver",
+    "depot_id": "D4",
+    "phone": "9811007002"
+  },
+  {
+    "id": "U24",
+    "username": "driver15",
+    "password": "password",
+    "full_name": "Kapil Saxena",
+    "role": "driver",
+    "depot_id": "D4",
+    "phone": "9811007003"
+  },
+  {
+    "id": "U25",
+    "username": "driver16",
+    "password": "password",
+    "full_name": "Ashok Nigam",
+    "role": "driver",
+    "depot_id": "D4",
+    "phone": "9811007004"
+  }
+]

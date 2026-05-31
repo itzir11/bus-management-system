@@ -1,0 +1,98 @@
+[
+  {
+    "id": "D1",
+    "code": "NSD37",
+    "name": "Noida Sector 37 Depot",
+    "lat": 28.5459,
+    "lng": 77.3427,
+    "address": "Sector 37, Noida, Uttar Pradesh 201301",
+    "polygon_geojson": {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [77.3407, 28.5439],
+            [77.3447, 28.5439],
+            [77.3447, 28.5479],
+            [77.3407, 28.5479],
+            [77.3407, 28.5439]
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "id": "D2",
+    "code": "AVD",
+    "name": "Anand Vihar Depot",
+    "lat": 28.6464,
+    "lng": 77.3159,
+    "address": "Anand Vihar, East Delhi, Delhi 110092",
+    "polygon_geojson": {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [77.3139, 28.6444],
+            [77.3179, 28.6444],
+            [77.3179, 28.6484],
+            [77.3139, 28.6484],
+            [77.3139, 28.6444]
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "id": "D3",
+    "code": "GHZD",
+    "name": "Ghaziabad Depot",
+    "lat": 28.6692,
+    "lng": 77.4538,
+    "address": "Navyug Market, Ghaziabad, Uttar Pradesh 201001",
+    "polygon_geojson": {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [77.4518, 28.6672],
+            [77.4558, 28.6672],
+            [77.4558, 28.6712],
+            [77.4518, 28.6712],
+            [77.4518, 28.6672]
+          ]
+        ]
+      }
+    }
+  },
+  {
+    "id": "D4",
+    "code": "SHBD",
+    "name": "Sahibabad Depot",
+    "lat": 28.6714,
+    "lng": 77.3848,
+    "address": "Site 4, Sahibabad Industrial Area, Ghaziabad, Uttar Pradesh 201010",
+    "polygon_geojson": {
+      "type": "Feature",
+      "properties": {},
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [77.3828, 28.6694],
+            [77.3868, 28.6694],
+            [77.3868, 28.6734],
+            [77.3828, 28.6734],
+            [77.3828, 28.6694]
+          ]
+        ]
+      }
+    }
+  }
+]

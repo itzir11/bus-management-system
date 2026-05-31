@@ -1,0 +1,42 @@
+[
+  {
+    "id": "R1",
+    "code": "NC-62",
+    "name": "Noida City Centre → Sector 62",
+    "depot_id": "D1",
+    "total_stops": 6,
+    "distance_km": 12.4
+  },
+  {
+    "id": "R2",
+    "code": "AV-VSH",
+    "name": "Anand Vihar → Vaishali",
+    "depot_id": "D2",
+    "total_stops": 4,
+    "distance_km": 7.8
+  },
+  {
+    "id": "R3",
+    "code": "GHZ-MDN",
+    "name": "Ghaziabad → Modinagar",
+    "depot_id": "D3",
+    "total_stops": 5,
+    "distance_km": 22.6
+  },
+  {
+    "id": "R4",
+    "code": "KSM-N18",
+    "name": "Kaushambi → Noida Sec 18",
+    "depot_id": "D2",
+    "total_stops": 5,
+    "distance_km": 9.3
+  },
+  {
+    "id": "R5",
+    "code": "SHB-IPR",
+    "name": "Sahibabad → Indirapuram",
+    "depot_id": "D4",
+    "total_stops": 4,
+    "distance_km": 6.5
+  }
+]

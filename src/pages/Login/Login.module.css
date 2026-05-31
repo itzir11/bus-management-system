@@ -144,6 +144,7 @@
 .formPanel {
   background: var(--surface-raised);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: var(--sp-12);
@@ -316,27 +317,37 @@
   margin-top: var(--sp-1);
 }
 
-/* ── Mobile header strip (right-panel-only view) ───────────── */
+/* ── Mobile header strip ───────────────────────────────────── */
 .mobileHeader {
   display: none;
-  background: linear-gradient(135deg, var(--sidebar-bg), var(--primary-dark));
-  padding: var(--sp-4) var(--sp-6);
+  background: linear-gradient(135deg, var(--sidebar-bg), var(--primary));
+  padding: var(--sp-8) var(--sp-6) var(--sp-6);
   text-align: center;
+  width: 100%;
+  flex-shrink: 0;
 }
 
 .mobileHeaderTitle {
-  font-size: var(--text-base);
+  font-size: var(--text-lg);
   font-weight: 700;
   color: var(--text-inverse);
   font-family: var(--font-sans);
 }
 
+.mobileHeaderSub {
+  font-size: var(--text-xs);
+  color: rgba(255, 255, 255, 0.5);
+  font-family: var(--font-sans);
+  margin-top: var(--sp-1);
+}
+
 /* ── Responsive ────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .page {
-    grid-template-columns: 1fr;
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
+    background: var(--surface-raised);
   }
 
   .brand {
@@ -344,17 +355,24 @@
   }
 
   .mobileHeader {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .formPanel {
     flex: 1;
-    padding: var(--sp-6);
-    align-items: flex-start;
-    padding-top: var(--sp-8);
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: var(--sp-6) var(--sp-4);
   }
 
   .formCard {
-    padding: var(--sp-8) var(--sp-6);
+    padding: var(--sp-6);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    width: 100%;
+    max-width: 440px;
   }
 }

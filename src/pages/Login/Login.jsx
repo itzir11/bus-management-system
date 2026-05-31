@@ -138,6 +138,7 @@ export default function Login() {
           <span className={styles.mobileHeaderTitle}>
             Bus Management System
           </span>
+          <span className={styles.mobileHeaderSub}>by Ishika Rohilla</span>
         </div>
 
         <div className={styles.formCard}>

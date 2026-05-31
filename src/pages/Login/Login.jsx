@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import styles from "./Login.module.css";
 
 const DEMO_CREDENTIALS = [
   { role: "Admin", username: "admin", password: "admin123" },
@@ -35,132 +36,198 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-100 flex items-center justify-center px-4">
-      <div className="w-full max-w-md">
-        <div className="bg-white rounded-2xl shadow-md border border-slate-200 overflow-hidden">
-          <div className="bg-slate-800 px-8 py-6 text-center">
-            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-blue-600 mb-3">
-              <svg
-                className="w-6 h-6 text-white"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                />
-              </svg>
-            </div>
-            <h1 className="text-xl font-bold text-white tracking-tight">
-              Bus Management System
-            </h1>
-            <p className="text-slate-400 text-sm mt-1">Control Room Portal</p>
+    <div className={styles.page}>
+      {/* ── Left brand panel ── */}
+      <div className={styles.brand}>
+        <div className={styles.brandGlow} aria-hidden="true" />
+
+        <div className={styles.brandContent}>
+          {/* Bus icon */}
+          <div className={styles.brandIconWrap}>
+            <svg
+              width="44"
+              height="44"
+              viewBox="0 0 44 44"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              {/* Bus body */}
+              <rect
+                x="4"
+                y="10"
+                width="36"
+                height="22"
+                rx="4"
+                fill="white"
+                fillOpacity="0.95"
+              />
+              {/* Windshield left */}
+              <rect
+                x="7"
+                y="14"
+                width="10"
+                height="8"
+                rx="1.5"
+                fill="#93c5fd"
+              />
+              {/* Windshield right */}
+              <rect
+                x="20"
+                y="14"
+                width="10"
+                height="8"
+                rx="1.5"
+                fill="#93c5fd"
+              />
+              {/* Door */}
+              <rect x="33" y="16" width="5" height="10" rx="1" fill="#bfdbfe" />
+              {/* Undercarriage / chassis */}
+              <rect
+                x="6"
+                y="32"
+                width="32"
+                height="3"
+                rx="1"
+                fill="white"
+                fillOpacity="0.6"
+              />
+              {/* Left wheel */}
+              <circle cx="11" cy="35" r="4" fill="white" fillOpacity="0.9" />
+              <circle cx="11" cy="35" r="2" fill="#3b82f6" />
+              {/* Right wheel */}
+              <circle cx="33" cy="35" r="4" fill="white" fillOpacity="0.9" />
+              <circle cx="33" cy="35" r="2" fill="#3b82f6" />
+              {/* Roof stripe */}
+              <rect
+                x="4"
+                y="10"
+                width="36"
+                height="3"
+                rx="2"
+                fill="#3b82f6"
+                fillOpacity="0.5"
+              />
+            </svg>
           </div>
 
-          <div className="px-8 py-7">
-            <form onSubmit={handleSubmit} noValidate>
-              <div className="space-y-4">
-                <div>
-                  <label
-                    className="block text-sm font-medium text-slate-700 mb-1"
-                    htmlFor="username"
-                  >
-                    Username
-                  </label>
-                  <input
-                    id="username"
-                    type="text"
-                    autoComplete="username"
-                    autoFocus
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    className="w-full px-3 py-2 rounded-lg border border-slate-300 text-slate-800 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                    placeholder="Enter username"
-                    required
-                  />
-                </div>
+          <h1 className={styles.brandTitle}>Bus Management System</h1>
+          <p className={styles.brandSubtitle}>by Ishika Rohilla</p>
 
-                <div>
-                  <label
-                    className="block text-sm font-medium text-slate-700 mb-1"
-                    htmlFor="password"
-                  >
-                    Password
-                  </label>
-                  <input
-                    id="password"
-                    type="password"
-                    autoComplete="current-password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="w-full px-3 py-2 rounded-lg border border-slate-300 text-slate-800 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                    placeholder="Enter password"
-                    required
-                  />
-                </div>
-              </div>
-
-              {error && (
-                <div className="mt-4 flex items-center gap-2 px-3 py-2.5 rounded-lg bg-red-50 border border-red-200">
-                  <svg
-                    className="w-4 h-4 text-red-500 flex-shrink-0"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  <span className="text-sm text-red-700">{error}</span>
-                </div>
-              )}
-
-              <button
-                type="submit"
-                disabled={loading || !username || !password}
-                className="mt-5 w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white text-sm font-semibold rounded-lg transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-              >
-                {loading ? "Signing in…" : "Sign In"}
-              </button>
-            </form>
-
-            <div className="mt-6 pt-5 border-t border-slate-100">
-              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">
-                Demo Credentials
-              </p>
-              <div className="grid grid-cols-2 gap-2">
-                {DEMO_CREDENTIALS.map(({ role, username: u, password: p }) => (
-                  <button
-                    key={u}
-                    type="button"
-                    onClick={() => {
-                      setUsername(u);
-                      setPassword(p);
-                      setError("");
-                    }}
-                    className="text-left px-3 py-2 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 transition"
-                  >
-                    <span className="block text-xs font-semibold text-slate-700">
-                      {role}
-                    </span>
-                    <span className="block text-xs text-slate-500 font-mono">
-                      {u}
-                    </span>
-                  </button>
-                ))}
-              </div>
+          <div className={styles.brandStats}>
+            <div className={styles.brandStat}>
+              <span className={styles.brandStatValue}>4</span>
+              <span className={styles.brandStatLabel}>Depots</span>
+            </div>
+            <div className={styles.brandStat}>
+              <span className={styles.brandStatValue}>20</span>
+              <span className={styles.brandStatLabel}>Vehicles</span>
+            </div>
+            <div className={styles.brandStat}>
+              <span className={styles.brandStatValue}>5</span>
+              <span className={styles.brandStatLabel}>Roles</span>
             </div>
           </div>
         </div>
+      </div>
 
-        <p className="text-center text-xs text-slate-400 mt-4">
-          Bus Management System &mdash; by Ishika Rohilla
-        </p>
+      {/* ── Right form panel ── */}
+      <div className={styles.formPanel}>
+        {/* Mobile-only top strip */}
+        <div className={styles.mobileHeader}>
+          <span className={styles.mobileHeaderTitle}>
+            Bus Management System
+          </span>
+        </div>
+
+        <div className={styles.formCard}>
+          <h2 className={styles.formTitle}>Welcome back</h2>
+          <p className={styles.formSubtitle}>Sign in to your account</p>
+
+          <form onSubmit={handleSubmit} noValidate>
+            <div className={styles.field}>
+              <label className={styles.label} htmlFor="username">
+                Username
+              </label>
+              <input
+                id="username"
+                type="text"
+                autoComplete="username"
+                autoFocus
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className={styles.input}
+                placeholder="Enter username"
+                required
+              />
+            </div>
+
+            <div className={styles.field}>
+              <label className={styles.label} htmlFor="password">
+                Password
+              </label>
+              <input
+                id="password"
+                type="password"
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className={styles.input}
+                placeholder="Enter password"
+                required
+              />
+            </div>
+
+            {error && (
+              <div className={styles.error}>
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                  style={{ flexShrink: 0 }}
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                <span>{error}</span>
+              </div>
+            )}
+
+            <button
+              type="submit"
+              disabled={loading || !username || !password}
+              className={styles.submitBtn}
+            >
+              {loading ? "Signing in…" : "Sign In"}
+            </button>
+          </form>
+
+          <hr className={styles.divider} />
+
+          <p className={styles.demoLabel}>Demo Credentials</p>
+          <div className={styles.demoGrid}>
+            {DEMO_CREDENTIALS.map(({ role, username: u, password: p }) => (
+              <button
+                key={u}
+                type="button"
+                onClick={() => {
+                  setUsername(u);
+                  setPassword(p);
+                  setError("");
+                }}
+                className={styles.demoBtn}
+              >
+                <span className={styles.demoRole}>{role}</span>
+                <span className={styles.demoUser}>{u}</span>
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

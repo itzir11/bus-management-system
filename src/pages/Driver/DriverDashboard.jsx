@@ -9,14 +9,17 @@ import {
   formatDate,
   timeAgo,
 } from "../../utils/helpers";
+import styles from "./Driver.module.css";
 
 const TODAY = "2026-05-31";
 
 function Toast({ message }) {
   return (
-    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-5 py-3 bg-slate-900 text-white text-sm font-medium rounded-xl shadow-2xl flex items-center gap-2 animate-fade-in">
+    <div className={styles.toast}>
       <svg
-        className="w-4 h-4 text-green-400 flex-shrink-0"
+        className={styles.toastIcon}
+        width="16"
+        height="16"
         fill="currentColor"
         viewBox="0 0 20 20"
       >
@@ -122,44 +125,26 @@ export default function DriverDashboard() {
     todayDuty &&
     (todayDuty.status === "acknowledged" || todayDuty.status === "completed");
 
+  const firstName = user.full_name.split(" ")[0];
+
   return (
-    <div className="min-h-screen bg-slate-50 py-6 px-4">
-      <div className="max-w-md mx-auto space-y-5">
-        <div>
-          <h1 className="text-xl font-bold text-slate-800">
-            Good morning, {user.full_name.split(" ")[0]}
-          </h1>
-          <p className="text-sm text-slate-500 mt-0.5">{formatDate(TODAY)}</p>
+    <div className="p-4 md:p-6">
+      <div className={styles.page}>
+        {/* Greeting strip */}
+        <div className={styles.greeting}>
+          <p className={styles.greetingName}>Good morning, {firstName}</p>
+          <p className={styles.greetingRole}>Driver</p>
+          <p className={styles.greetingDepot}>{formatDate(TODAY)}</p>
         </div>
 
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-          <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-indigo-100 flex items-center justify-center">
-                <svg
-                  className="w-4 h-4 text-indigo-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  />
-                </svg>
-              </div>
-              <span className="text-sm font-semibold text-slate-800">
-                Today's Duty
-              </span>
-            </div>
+        {/* Today's duty card */}
+        <div className={styles.dutyCard}>
+          <div className={styles.dutyHeader}>
+            <span className={styles.dutyHeaderTitle}>Today's Duty</span>
             {todayDuty && (
               <span
-                className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
-                  dutyAcknowledged
-                    ? "bg-green-100 text-green-700"
-                    : "bg-amber-100 text-amber-700"
+                className={`${styles.statusBadge} ${
+                  dutyAcknowledged ? styles.statusAck : styles.statusPending
                 }`}
               >
                 {dutyAcknowledged ? "Acknowledged" : "Pending"}
@@ -167,12 +152,13 @@ export default function DriverDashboard() {
             )}
           </div>
 
-          <div className="px-5 py-5">
+          <div className={styles.dutyBody}>
             {!todayDuty ? (
-              <div className="flex flex-col items-center py-6 text-center">
-                <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mb-3">
+              <div className={styles.noDuty}>
+                <div className={styles.noDutyIcon}>
                   <svg
-                    className="w-6 h-6 text-slate-400"
+                    width="24"
+                    height="24"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -185,48 +171,70 @@ export default function DriverDashboard() {
                     />
                   </svg>
                 </div>
-                <p className="text-sm font-medium text-slate-600">
+                <p style={{ fontWeight: 500, color: "var(--text-secondary)" }}>
                   No duty assigned for today
                 </p>
-                <p className="text-xs text-slate-400 mt-1">
+                <p
+                  style={{
+                    marginTop: "var(--sp-1)",
+                    fontSize: "var(--text-xs)",
+                  }}
+                >
                   Check back with your depot manager.
                 </p>
               </div>
             ) : (
-              <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="bg-slate-50 rounded-xl p-3">
-                    <p className="text-xs text-slate-400 mb-1">Route</p>
-                    <p className="text-sm font-semibold text-slate-800 truncate">
+              <>
+                <div className={styles.dutyMeta}>
+                  <div className={styles.dutyMetaItem}>
+                    <span className={styles.dutyMetaLabel}>Route</span>
+                    <span
+                      className={styles.dutyMetaValue}
+                      style={{
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
                       {todayRoute ? todayRoute.name : todayDuty.route_id}
-                    </p>
+                    </span>
                   </div>
-                  <div className="bg-slate-50 rounded-xl p-3">
-                    <p className="text-xs text-slate-400 mb-1">Vehicle</p>
-                    <p className="text-sm font-semibold text-slate-800 font-mono">
+                  <div className={styles.dutyMetaItem}>
+                    <span className={styles.dutyMetaLabel}>Vehicle</span>
+                    <span
+                      className={`${styles.dutyMetaValue} ${styles.dutyMetaValueMono}`}
+                    >
                       {todayVehicle
                         ? todayVehicle.reg_no
                         : todayDuty.vehicle_id}
-                    </p>
+                    </span>
                   </div>
-                  <div className="bg-slate-50 rounded-xl p-3">
-                    <p className="text-xs text-slate-400 mb-1">Depot</p>
-                    <p className="text-sm font-semibold text-slate-800 truncate">
+                  <div className={styles.dutyMetaItem}>
+                    <span className={styles.dutyMetaLabel}>Depot</span>
+                    <span
+                      className={styles.dutyMetaValue}
+                      style={{
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
                       {todayDepot ? todayDepot.name : todayDuty.depot_id}
-                    </p>
+                    </span>
                   </div>
-                  <div className="bg-slate-50 rounded-xl p-3">
-                    <p className="text-xs text-slate-400 mb-1">Shift</p>
-                    <p className="text-sm font-semibold text-slate-800">
+                  <div className={styles.dutyMetaItem}>
+                    <span className={styles.dutyMetaLabel}>Shift</span>
+                    <span className={styles.dutyMetaValue}>
                       {todayDuty.start_time} → {todayDuty.end_time}
-                    </p>
+                    </span>
                   </div>
                 </div>
 
                 {dutyAcknowledged ? (
-                  <div className="flex items-center justify-center gap-2 py-3 rounded-xl bg-green-50 border border-green-200">
+                  <div className={styles.ackBadge}>
                     <svg
-                      className="w-4 h-4 text-green-600"
+                      width="16"
+                      height="16"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                     >
@@ -236,64 +244,53 @@ export default function DriverDashboard() {
                         clipRule="evenodd"
                       />
                     </svg>
-                    <span className="text-sm font-semibold text-green-700">
-                      Acknowledged
-                    </span>
+                    Acknowledged
                   </div>
                 ) : (
                   todayDuty.status === "published" && (
                     <button
                       onClick={handleAcknowledgeDuty}
-                      className="w-full py-3 rounded-xl bg-indigo-600 text-white text-sm font-semibold hover:bg-indigo-700 active:scale-[0.98] transition-all"
+                      className={styles.ackBtn}
                     >
                       Acknowledge Duty
                     </button>
                   )
                 )}
-              </div>
+              </>
             )}
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-          <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center">
-                <svg
-                  className="w-4 h-4 text-blue-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                  />
-                </svg>
-              </div>
-              <span className="text-sm font-semibold text-slate-800">
-                Notices
-              </span>
+        {/* Notices card */}
+        <div className={styles.sectionCard}>
+          <div className={styles.sectionHeader}>
+            <div className="flex items-center gap-3">
+              <span className={styles.sectionTitle}>Notices</span>
               {unreadCount > 0 && (
-                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-600 text-white text-xs font-bold">
-                  {unreadCount}
-                </span>
+                <span className={styles.unreadBadge}>{unreadCount}</span>
               )}
             </div>
             <Link
               to="/cms"
-              className="text-xs font-medium text-blue-600 hover:text-blue-700 transition-colors"
+              className={styles.viewAllLink}
+              style={{ padding: 0, border: "none" }}
             >
               View All
             </Link>
           </div>
 
-          <div className="divide-y divide-slate-50">
+          <div>
             {recentNotices.length === 0 ? (
-              <div className="px-5 py-6 text-center">
-                <p className="text-sm text-slate-500">No notices yet</p>
+              <div
+                style={{
+                  padding: "var(--sp-6)",
+                  textAlign: "center",
+                  color: "var(--text-muted)",
+                  fontSize: "var(--text-sm)",
+                  fontFamily: "var(--font-sans)",
+                }}
+              >
+                No notices yet
               </div>
             ) : (
               recentNotices.map((notice) => {
@@ -302,45 +299,55 @@ export default function DriverDashboard() {
                   <Link
                     key={notice.id}
                     to="/cms"
-                    className={`flex items-start gap-3 px-5 py-4 hover:bg-slate-50 transition-colors ${
-                      !read ? "bg-blue-50/30" : ""
-                    }`}
+                    className={styles.noticeItem}
+                    style={!read ? { background: "var(--primary-light)" } : {}}
                   >
-                    {!read && (
-                      <span className="w-2 h-2 rounded-full bg-blue-500 flex-shrink-0 mt-1.5" />
-                    )}
-                    {read && (
-                      <span className="w-2 h-2 rounded-full bg-transparent flex-shrink-0 mt-1.5" />
-                    )}
+                    <span
+                      className={`${styles.noticeDot} ${read ? styles.noticeDotRead : ""}`}
+                    />
                     <div className="flex-1 min-w-0">
                       <p
-                        className={`text-sm leading-snug truncate ${read ? "text-slate-600" : "text-slate-900 font-medium"}`}
+                        className={styles.noticeItemTitle}
+                        style={
+                          !read
+                            ? { fontWeight: 600 }
+                            : {
+                                fontWeight: 400,
+                                color: "var(--text-secondary)",
+                              }
+                        }
                       >
                         {notice.title}
                       </p>
-                      <p className="text-xs text-slate-400 mt-0.5">
+                      <p className={styles.noticeItemTime}>
                         {timeAgo(notice.publish_at)}
                       </p>
                     </div>
                     {notice.requires_ack && !read && (
-                      <span className="flex-shrink-0 text-xs font-medium text-amber-600 bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded">
-                        Ack
-                      </span>
+                      <span className={styles.noticeAckTag}>Ack</span>
                     )}
                   </Link>
                 );
               })
             )}
           </div>
+
+          <Link to="/cms" className={styles.viewAllLink}>
+            View all notices
+          </Link>
         </div>
 
-        <button
-          onClick={handlePanic}
-          className="w-full py-5 rounded-2xl bg-red-600 text-white font-bold text-lg hover:bg-red-700 active:scale-[0.97] transition-all shadow-lg shadow-red-200 flex items-center justify-center gap-3"
-        >
-          <span className="text-2xl">🚨</span>
-          PANIC — Report Emergency
-        </button>
+        {/* Panic button */}
+        <div className={styles.panicWrap}>
+          <p className={styles.panicTitle}>Emergency</p>
+          <p className={styles.panicDesc}>
+            Use only in case of a genuine emergency. This will immediately raise
+            a P1 incident and alert your depot.
+          </p>
+          <button onClick={handlePanic} className={styles.panicBtn}>
+            PANIC — Report Emergency
+          </button>
+        </div>
       </div>
 
       {toast && <Toast message={toast} />}

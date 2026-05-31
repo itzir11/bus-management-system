@@ -190,14 +190,14 @@ export default function Sidebar({ isOpen, onClose }) {
     <>
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-20 md:hidden backdrop-blur-sm"
+          className="fixed inset-0 bg-black/50 z-[1001] md:hidden"
           onClick={onClose}
         />
       )}
 
       <aside
         className={`
-          fixed md:static top-0 left-0 h-full z-30 md:z-auto
+          fixed md:static top-0 left-0 h-full z-[1002] md:z-auto
           w-60 bg-slate-950 flex flex-col shrink-0
           transition-transform duration-200 ease-in-out
           ${isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}

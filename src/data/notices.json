@@ -1,0 +1,47 @@
+[
+  {
+    "id": "N001",
+    "title": "Safety Briefing: Monsoon Season Driving Guidelines",
+    "body": "All drivers are required to follow updated monsoon driving protocols effective 01 June 2026. Key points: (1) Reduce speed by 20% in wet conditions. (2) Increase following distance to minimum 50 metres. (3) Report flooded underpasses immediately to control room. (4) Do not attempt to cross water-logged areas without authorization. Attendance at depot safety briefing on 01 June is mandatory.",
+    "audience": "all_drivers",
+    "publish_at": "2026-05-30T06:00:00.000Z",
+    "created_by": "U01",
+    "requires_ack": true
+  },
+  {
+    "id": "N002",
+    "title": "Route Change: R1 Diversion via Sector 38 from 01 June",
+    "body": "Due to metro construction work on Sector 62 link road, Route R1 (Noida City Centre → Sector 62) will follow a revised alignment from 01 June 2026. Buses will take the Sector 38 bypass instead of the main road. Estimated additional travel time: 8 minutes. Updated duty cards will be provided at depot. All D1 drivers must collect updated route maps from the duty office before their first trip on 01 June.",
+    "audience": "depot:D1",
+    "publish_at": "2026-05-31T05:00:00.000Z",
+    "created_by": "U01",
+    "requires_ack": true
+  },
+  {
+    "id": "N003",
+    "title": "Uniform Policy Reminder",
+    "body": "It has been observed that some drivers are not wearing the prescribed NCRTC uniform while on duty. All drivers are reminded that wearing the official uniform including ID card is mandatory at all times while on duty. Failure to comply will result in disciplinary action as per the service rules. Depot managers are requested to conduct random checks.",
+    "audience": "all_drivers",
+    "publish_at": "2026-05-28T08:00:00.000Z",
+    "created_by": "U02",
+    "requires_ack": false
+  },
+  {
+    "id": "N004",
+    "title": "New CNG Filling Protocol: Ghaziabad and Sahibabad Depots",
+    "body": "Effective immediately, all vehicles at D3 and D4 depots must fill CNG at the designated depot pump only. Do not use roadside CNG stations without prior written approval from the depot manager. Vehicles found refuelling at unauthorized stations will be flagged for disciplinary review. This is to ensure accurate fuel consumption tracking and cost control.",
+    "audience": "depot:D3",
+    "publish_at": "2026-05-29T10:00:00.000Z",
+    "created_by": "U01",
+    "requires_ack": true
+  },
+  {
+    "id": "N005",
+    "title": "Emergency: GPS Device Update Required on Selected Vehicles",
+    "body": "The following vehicles require a mandatory GPS firmware update to be completed by end of 31 May 2026: V03, V09, V14, V20. Depot managers are requested to ensure these vehicles are made available to the technical team by 15:00 today. Vehicles that miss the update window will be grounded until the update is applied. Contact control room (Ext 201) for any queries.",
+    "audience": "all_drivers",
+    "publish_at": "2026-05-31T07:00:00.000Z",
+    "created_by": "U02",
+    "requires_ack": false
+  }
+]

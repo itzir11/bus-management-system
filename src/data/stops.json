@@ -1,0 +1,122 @@
+[
+  {
+    "id": "S01",
+    "name": "Noida City Centre Metro",
+    "lat": 28.5355,
+    "lng": 77.3910
+  },
+  {
+    "id": "S02",
+    "name": "Noida Sector 18 Market",
+    "lat": 28.5673,
+    "lng": 77.3211
+  },
+  {
+    "id": "S03",
+    "name": "Noida Sector 37 Bus Stand",
+    "lat": 28.5459,
+    "lng": 77.3427
+  },
+  {
+    "id": "S04",
+    "name": "Noida Sector 62 Metro",
+    "lat": 28.6270,
+    "lng": 77.3714
+  },
+  {
+    "id": "S05",
+    "name": "Anand Vihar ISBT",
+    "lat": 28.6467,
+    "lng": 77.3155
+  },
+  {
+    "id": "S06",
+    "name": "Vaishali Metro Station",
+    "lat": 28.6453,
+    "lng": 77.3386
+  },
+  {
+    "id": "S07",
+    "name": "Kaushambi Bus Stand",
+    "lat": 28.6388,
+    "lng": 77.3264
+  },
+  {
+    "id": "S08",
+    "name": "Indirapuram Habitat Centre",
+    "lat": 28.6412,
+    "lng": 77.3649
+  },
+  {
+    "id": "S09",
+    "name": "Ghaziabad Railway Station",
+    "lat": 28.6629,
+    "lng": 77.4345
+  },
+  {
+    "id": "S10",
+    "name": "Ghaziabad Bus Stand",
+    "lat": 28.6692,
+    "lng": 77.4538
+  },
+  {
+    "id": "S11",
+    "name": "Sahibabad Industrial Area",
+    "lat": 28.6714,
+    "lng": 77.3848
+  },
+  {
+    "id": "S12",
+    "name": "Raj Nagar Extension",
+    "lat": 28.6841,
+    "lng": 77.4312
+  },
+  {
+    "id": "S13",
+    "name": "Modinagar Chowk",
+    "lat": 28.8371,
+    "lng": 77.5671
+  },
+  {
+    "id": "S14",
+    "name": "Lal Kuan Bus Stop",
+    "lat": 28.6598,
+    "lng": 77.4102
+  },
+  {
+    "id": "S15",
+    "name": "Noida Sector 51 Metro",
+    "lat": 28.6197,
+    "lng": 77.3642
+  },
+  {
+    "id": "S16",
+    "name": "Noida Sector 52 Crossing",
+    "lat": 28.6234,
+    "lng": 77.3580
+  },
+  {
+    "id": "S17",
+    "name": "Pratap Vihar Chowk",
+    "lat": 28.6762,
+    "lng": 77.4498
+  },
+  {
+    "id": "S18",
+    "name": "Crossing Republik",
+    "lat": 28.6274,
+    "lng": 77.4095
+  },
+  {
+    "id": "S19",
+    "name": "Dilshad Garden Metro",
+    "lat": 28.6724,
+    "lng": 77.3197
+  },
+  {
+    "id": "S20",
+    "name": "Arthala Metro Station",
+    "lat": 28.6783,
+    "lng": 77.3741
+  }
+]

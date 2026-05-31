@@ -8,25 +8,25 @@ import {
   getDepotById,
   timeAgo,
   severityColor,
-  statusBadgeClass,
 } from "../../utils/helpers";
+import styles from "./IMSPage.module.css";
 
-const SEVERITY_COLORS = {
-  red: "bg-red-100 text-red-700",
-  amber: "bg-amber-100 text-amber-700",
-  green: "bg-green-100 text-green-700",
-  slate: "bg-slate-100 text-slate-600",
-};
+function severityBadgeClass(severity) {
+  if (severity === "P1") return `${styles.badge} ${styles.badgeP1}`;
+  if (severity === "P2") return `${styles.badge} ${styles.badgeP2}`;
+  if (severity === "P3") return `${styles.badge} ${styles.badgeP3}`;
+  return styles.badge;
+}
 
-function SeverityBadge({ severity }) {
-  const color = severityColor(severity);
-  return (
-    <span
-      className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${SEVERITY_COLORS[color] ?? SEVERITY_COLORS.slate}`}
-    >
-      {severity}
-    </span>
-  );
+function statusBadgeClass(status) {
+  if (status === "open") return `${styles.badge} ${styles.badgeOpen}`;
+  if (status === "acknowledged")
+    return `${styles.badge} ${styles.badgeAcknowledged}`;
+  if (status === "in_progress")
+    return `${styles.badge} ${styles.badgeInProgress}`;
+  if (status === "resolved") return `${styles.badge} ${styles.badgeResolved}`;
+  if (status === "closed") return `${styles.badge} ${styles.badgeClosed}`;
+  return styles.badge;
 }
 
 export default function IMSPage() {
@@ -68,20 +68,18 @@ export default function IMSPage() {
   }
 
   return (
-    <div className="p-6 space-y-5">
-      <div className="flex items-center justify-between">
+    <div className={`${styles.page}`}>
+      <div className={styles.header}>
         <div>
-          <h1 className="text-xl font-bold text-slate-800">Incidents</h1>
-          <p className="text-sm text-slate-500 mt-0.5">
+          <h1 className={styles.pageTitle}>Incidents</h1>
+          <p className={styles.pageSubtitle}>
             Track and manage operational incidents.
           </p>
         </div>
-        <Link
-          to="/ims/raise"
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors"
-        >
+        <Link to="/ims/raise" className={`${styles.btn} ${styles.btnPrimary}`}>
           <svg
-            className="w-4 h-4"
+            width="16"
+            height="16"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -97,56 +95,78 @@ export default function IMSPage() {
         </Link>
       </div>
 
-      <div className="flex flex-wrap items-center gap-3">
-        <div className="flex items-center gap-1.5">
-          <label className="text-xs font-medium text-slate-500">Status</label>
+      <div className={styles.card}>
+        <div className={styles.filterBar}>
+          <span className={styles.filterLabel}>Status</span>
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="text-sm border border-slate-200 rounded-lg px-2.5 py-1.5 bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className={styles.select}
           >
-            <option value="all">All</option>
+            <option value="all">All statuses</option>
             <option value="open">Open</option>
             <option value="acknowledged">Acknowledged</option>
             <option value="in_progress">In Progress</option>
             <option value="resolved">Resolved</option>
             <option value="closed">Closed</option>
           </select>
-        </div>
 
-        <div className="flex items-center gap-1.5">
-          <label className="text-xs font-medium text-slate-500">Severity</label>
+          <span className={`${styles.filterLabel} ml-2`}>Severity</span>
           <select
             value={severityFilter}
             onChange={(e) => setSeverityFilter(e.target.value)}
-            className="text-sm border border-slate-200 rounded-lg px-2.5 py-1.5 bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className={styles.select}
           >
-            <option value="all">All</option>
-            <option value="P1">P1</option>
-            <option value="P2">P2</option>
-            <option value="P3">P3</option>
+            <option value="all">All severities</option>
+            <option value="P1">P1 — Critical</option>
+            <option value="P2">P2 — Major</option>
+            <option value="P3">P3 — Minor</option>
           </select>
+
+          <button
+            type="button"
+            onClick={() => setMineOnly((v) => !v)}
+            className={`${styles.btn} ${mineOnly ? styles.btnMineActive : styles.btnSecondary} ml-auto`}
+          >
+            {mineOnly ? (
+              <svg
+                width="14"
+                height="14"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            ) : (
+              <svg
+                width="14"
+                height="14"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                />
+              </svg>
+            )}
+            Mine only
+          </button>
         </div>
 
-        <label className="flex items-center gap-2 cursor-pointer select-none">
-          <div
-            onClick={() => setMineOnly((v) => !v)}
-            className={`relative w-9 h-5 rounded-full transition-colors ${mineOnly ? "bg-blue-600" : "bg-slate-200"}`}
-          >
-            <span
-              className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform ${mineOnly ? "translate-x-4" : "translate-x-0"}`}
-            />
-          </div>
-          <span className="text-sm text-slate-600 font-medium">Mine only</span>
-        </label>
-      </div>
-
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
         {sorted.length === 0 ? (
-          <div className="py-16 text-center">
-            <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-3">
+          <div className={styles.emptyState}>
+            <div className={styles.emptyIcon}>
               <svg
-                className="w-6 h-6 text-slate-400"
+                width="24"
+                height="24"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -159,46 +179,28 @@ export default function IMSPage() {
                 />
               </svg>
             </div>
-            <p className="text-sm font-medium text-slate-600">
-              No incidents found
-            </p>
-            <p className="text-xs text-slate-400 mt-1">
-              Try adjusting your filters.
-            </p>
+            <p className={styles.emptyTitle}>No incidents found</p>
+            <p className={styles.emptyHint}>Try adjusting your filters.</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className={styles.table}>
               <thead>
-                <tr className="border-b border-slate-100 bg-slate-50">
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">
-                    ID
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">
-                    Type
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">
-                    Severity
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">
-                    Status
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">
+                <tr>
+                  <th className={styles.th}>ID</th>
+                  <th className={styles.th}>Type</th>
+                  <th className={styles.th}>Severity</th>
+                  <th className={styles.th}>Status</th>
+                  <th className={`${styles.th} hidden md:table-cell`}>
                     Vehicle
                   </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">
-                    Depot
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">
-                    Raised By
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">
-                    Time
-                  </th>
-                  <th className="px-4 py-3"></th>
+                  <th className={`${styles.th} hidden md:table-cell`}>Depot</th>
+                  <th className={styles.th}>Raised By</th>
+                  <th className={styles.th}>Time</th>
+                  <th className={styles.th}></th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-50">
+              <tbody>
                 {sorted.map((inc) => {
                   const vehicle = getVehicleById(vehicles, inc.vehicle_id);
                   const raiser = getUserById(users, inc.raised_by);
@@ -206,43 +208,50 @@ export default function IMSPage() {
                   const isAssignable =
                     canAssign &&
                     (inc.status === "open" || inc.status === "acknowledged");
+                  const isUrgent =
+                    inc.severity === "P1" && inc.status === "open";
+
                   return (
                     <tr
                       key={inc.id}
                       onClick={() => navigate(`/ims/${inc.id}`)}
-                      className="hover:bg-slate-50 cursor-pointer transition-colors"
+                      className={`${styles.tr} ${isUrgent ? styles.trUrgent : ""}`}
                     >
-                      <td className="px-4 py-3 font-mono text-xs text-slate-500 whitespace-nowrap">
+                      <td className={`${styles.td} ${styles.idCell}`}>
                         {inc.id}
                       </td>
-                      <td className="px-4 py-3 capitalize text-slate-700">
+                      <td className={`${styles.td} ${styles.typeCell}`}>
                         {inc.type.replace("_", " ")}
                       </td>
-                      <td className="px-4 py-3">
-                        <SeverityBadge severity={inc.severity} />
+                      <td className={styles.td}>
+                        <span className={severityBadgeClass(inc.severity)}>
+                          {inc.severity}
+                        </span>
                       </td>
-                      <td className="px-4 py-3">
+                      <td className={styles.td}>
                         <span className={statusBadgeClass(inc.status)}>
                           {inc.status.replace("_", " ")}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-slate-600 font-mono text-xs">
+                      <td
+                        className={`${styles.td} ${styles.monoCell} hidden md:table-cell`}
+                      >
                         {vehicle ? vehicle.reg_no : "—"}
                       </td>
-                      <td className="px-4 py-3 text-slate-600 text-xs">
+                      <td className={`${styles.td} hidden md:table-cell`}>
                         {depot ? depot.name : inc.depot_id}
                       </td>
-                      <td className="px-4 py-3 text-slate-600">
+                      <td className={styles.td}>
                         {raiser ? raiser.full_name : inc.raised_by}
                       </td>
-                      <td className="px-4 py-3 text-slate-400 whitespace-nowrap text-xs">
+                      <td className={`${styles.td} ${styles.timeCell}`}>
                         {timeAgo(inc.created_at)}
                       </td>
-                      <td className="px-4 py-3">
+                      <td className={styles.td}>
                         {isAssignable && (
                           <button
                             onClick={(e) => handleAssign(e, inc)}
-                            className="text-xs px-2.5 py-1 rounded-md bg-blue-50 text-blue-600 border border-blue-200 hover:bg-blue-100 transition-colors whitespace-nowrap font-medium"
+                            className={styles.assignBtn}
                           >
                             Assign to me
                           </button>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { useData } from "../../context/DataContext";
 import { getUserById, formatDate, timeAgo } from "../../utils/helpers";
+import styles from "./CMS.module.css";
 
 const AUDIENCE_OPTIONS = [
   { value: "all_drivers", label: "All Drivers" },
@@ -22,14 +23,12 @@ function todayIso() {
 function Modal({ onClose, children }) {
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4"
+      className={styles.modalBackdrop}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
-        {children}
-      </div>
+      <div className={styles.modal}>{children}</div>
     </div>
   );
 }
@@ -70,16 +69,16 @@ function CreateNoticeModal({ onClose, onSave, createdBy }) {
 
   return (
     <Modal onClose={onClose}>
-      <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
-        <h2 className="text-base font-semibold text-slate-800">
-          Create Notice
-        </h2>
+      <div className={styles.modalHeader}>
+        <h2 className={styles.modalTitle}>Create Notice</h2>
         <button
           onClick={onClose}
-          className="w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition-colors"
+          className={styles.closeBtn}
+          aria-label="Close"
         >
           <svg
-            className="w-4 h-4"
+            width="16"
+            height="16"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -94,47 +93,37 @@ function CreateNoticeModal({ onClose, onSave, createdBy }) {
         </button>
       </div>
 
-      <form onSubmit={handleSubmit} className="px-6 py-5 space-y-4">
-        <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">
-            Title
-          </label>
+      <form onSubmit={handleSubmit} className={styles.modalBody}>
+        <div className={styles.formField}>
+          <label className={styles.label}>Title</label>
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Notice title"
-            className={`w-full rounded-lg border px-3 py-2 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.title ? "border-red-400" : "border-slate-200"}`}
+            className={`${styles.input} ${errors.title ? styles.inputError : ""}`}
           />
-          {errors.title && (
-            <p className="text-xs text-red-500 mt-1">{errors.title}</p>
-          )}
+          {errors.title && <p className={styles.fieldError}>{errors.title}</p>}
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">
-            Body
-          </label>
+        <div className={styles.formField}>
+          <label className={styles.label}>Body</label>
           <textarea
             value={body}
             onChange={(e) => setBody(e.target.value)}
             rows={5}
             placeholder="Write the notice content here…"
-            className={`w-full rounded-lg border px-3 py-2 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none ${errors.body ? "border-red-400" : "border-slate-200"}`}
+            className={`${styles.input} ${styles.textarea} ${errors.body ? styles.inputError : ""}`}
           />
-          {errors.body && (
-            <p className="text-xs text-red-500 mt-1">{errors.body}</p>
-          )}
+          {errors.body && <p className={styles.fieldError}>{errors.body}</p>}
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">
-            Audience
-          </label>
+        <div className={styles.formField}>
+          <label className={styles.label}>Audience</label>
           <select
             value={audience}
             onChange={(e) => setAudience(e.target.value)}
-            className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
+            className={styles.select}
           >
             {AUDIENCE_OPTIONS.map((o) => (
               <option key={o.value} value={o.value}>
@@ -144,41 +133,39 @@ function CreateNoticeModal({ onClose, onSave, createdBy }) {
           </select>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">
-            Publish Date
-          </label>
+        <div className={styles.formField}>
+          <label className={styles.label}>Publish Date</label>
           <input
             type="date"
             value={publishAt}
             onChange={(e) => setPublishAt(e.target.value)}
-            className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className={styles.input}
           />
         </div>
 
-        <label className="flex items-center gap-3 cursor-pointer select-none">
+        <label
+          className={styles.checkboxRow}
+          style={{ cursor: "pointer", userSelect: "none" }}
+        >
           <input
             type="checkbox"
             checked={requiresAck}
             onChange={(e) => setRequiresAck(e.target.checked)}
-            className="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
           />
-          <span className="text-sm text-slate-700">
-            Requires acknowledgement
-          </span>
+          <span className={styles.checkboxLabel}>Requires acknowledgement</span>
         </label>
 
-        <div className="flex items-center justify-end gap-3 pt-2 border-t border-slate-100">
+        <div className={styles.modalFooter}>
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"
+            className={`${styles.btn} ${styles.btnSecondary}`}
           >
             Cancel
           </button>
           <button
             type="submit"
-            className="px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className={`${styles.btn} ${styles.btnPrimary}`}
           >
             Publish Notice
           </button>
@@ -195,36 +182,29 @@ function ReadReceiptsPanel({ notice, noticeReads, allDrivers }) {
   );
 
   return (
-    <div className="bg-slate-50 border-t border-slate-100 px-4 py-4">
-      <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">
-        Read Receipts
-      </p>
+    <div className={styles.receiptsPanel}>
+      <p className={styles.receiptsLabel}>Read Receipts</p>
       <div className="overflow-x-auto">
-        <table className="w-full text-sm">
+        <table className={styles.receiptsTable}>
           <thead>
-            <tr className="border-b border-slate-200">
-              <th className="text-left pb-2 text-xs font-semibold text-slate-500">
-                Driver
-              </th>
-              <th className="text-left pb-2 text-xs font-semibold text-slate-500">
-                Status
-              </th>
-              <th className="text-left pb-2 text-xs font-semibold text-slate-500">
-                Read At
-              </th>
+            <tr>
+              <th className={styles.receiptsTh}>Driver</th>
+              <th className={styles.receiptsTh}>Status</th>
+              <th className={styles.receiptsTh}>Read At</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100">
+          <tbody>
             {allDrivers.map((driver) => {
               const readAt = readMap[driver.id];
               return (
                 <tr key={driver.id}>
-                  <td className="py-2 text-slate-700">{driver.full_name}</td>
-                  <td className="py-2">
+                  <td className={styles.receiptsTd}>{driver.full_name}</td>
+                  <td className={styles.receiptsTd}>
                     {readAt ? (
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-700">
+                      <span className={`${styles.badge} ${styles.badgeRead}`}>
                         <svg
-                          className="w-3 h-3"
+                          width="10"
+                          height="10"
                           fill="currentColor"
                           viewBox="0 0 20 20"
                         >
@@ -237,12 +217,12 @@ function ReadReceiptsPanel({ notice, noticeReads, allDrivers }) {
                         Read
                       </span>
                     ) : (
-                      <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-slate-100 text-slate-500">
+                      <span className={`${styles.badge} ${styles.badgeUnread}`}>
                         Not read
                       </span>
                     )}
                   </td>
-                  <td className="py-2 text-slate-400 text-xs">
+                  <td className={styles.receiptsTdMuted}>
                     {readAt ? timeAgo(readAt) : "—"}
                   </td>
                 </tr>
@@ -291,20 +271,21 @@ function AdminView({ user, notices, noticeReads, users, addNotice }) {
   };
 
   return (
-    <div className="p-6 space-y-5">
-      <div className="flex items-center justify-between">
+    <div className={styles.page}>
+      <div className={styles.header}>
         <div>
-          <h1 className="text-xl font-bold text-slate-800">Notices</h1>
-          <p className="text-sm text-slate-500 mt-0.5">
+          <h1 className={styles.pageTitle}>Notices</h1>
+          <p className={styles.pageSubtitle}>
             Create and manage driver communications.
           </p>
         </div>
         <button
           onClick={() => setShowModal(true)}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors"
+          className={`${styles.btn} ${styles.btnPrimary}`}
         >
           <svg
-            className="w-4 h-4"
+            width="14"
+            height="14"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -320,38 +301,24 @@ function AdminView({ user, notices, noticeReads, users, addNotice }) {
         </button>
       </div>
 
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+      <div className={styles.card}>
         {sorted.length === 0 ? (
-          <div className="py-16 text-center">
-            <p className="text-sm font-medium text-slate-600">No notices yet</p>
-            <p className="text-xs text-slate-400 mt-1">
-              Create your first notice above.
-            </p>
+          <div className={styles.emptyState}>
+            <p>No notices yet.</p>
+            <p>Create your first notice above.</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+            <table className={styles.table}>
               <thead>
-                <tr className="border-b border-slate-100 bg-slate-50">
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">
-                    Title
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">
-                    Audience
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">
-                    Publish Date
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">
-                    Reads
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">
-                    Created By
-                  </th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide">
-                    Ack?
-                  </th>
-                  <th className="px-4 py-3" />
+                <tr>
+                  <th className={styles.th}>Title</th>
+                  <th className={styles.th}>Audience</th>
+                  <th className={styles.th}>Publish Date</th>
+                  <th className={styles.th}>Reads</th>
+                  <th className={styles.th}>Created By</th>
+                  <th className={styles.th}>Ack?</th>
+                  <th className={styles.th} />
                 </tr>
               </thead>
               <tbody>
@@ -364,47 +331,87 @@ function AdminView({ user, notices, noticeReads, users, addNotice }) {
                     <>
                       <tr
                         key={notice.id}
-                        className={`border-b border-slate-50 hover:bg-slate-50 cursor-pointer transition-colors ${isExpanded ? "bg-blue-50/40" : ""}`}
+                        className={`${styles.tr} ${isExpanded ? styles.trExpanded : ""}`}
                         onClick={() => toggleExpand(notice.id)}
                       >
-                        <td className="px-4 py-3 text-slate-800 font-medium max-w-xs truncate">
-                          {notice.title}
+                        <td className={styles.td} style={{ maxWidth: "260px" }}>
+                          <span
+                            style={{
+                              fontWeight: 500,
+                              color: "var(--text-primary)",
+                              display: "block",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              whiteSpace: "nowrap",
+                            }}
+                          >
+                            {notice.title}
+                          </span>
                         </td>
-                        <td className="px-4 py-3 text-slate-600 whitespace-nowrap">
-                          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
+                        <td className={styles.td}>
+                          <span
+                            className={`${styles.badge} ${styles.badgeAudience}`}
+                          >
                             {audienceLabel(notice.audience)}
                           </span>
                         </td>
-                        <td className="px-4 py-3 text-slate-500 whitespace-nowrap text-xs">
+                        <td
+                          className={styles.td}
+                          style={{ whiteSpace: "nowrap" }}
+                        >
                           {formatDate(notice.publish_at)}
                         </td>
-                        <td className="px-4 py-3 whitespace-nowrap">
-                          <span className="text-slate-700 font-medium">
+                        <td
+                          className={styles.td}
+                          style={{ whiteSpace: "nowrap" }}
+                        >
+                          <span
+                            style={{
+                              fontWeight: 600,
+                              color: "var(--text-primary)",
+                            }}
+                          >
                             {readCount}
                           </span>
-                          <span className="text-slate-400">
+                          <span style={{ color: "var(--text-muted)" }}>
                             {" "}
                             / {audienceDrivers.length}
                           </span>
                         </td>
-                        <td className="px-4 py-3 text-slate-500 text-xs">
+                        <td className={styles.td}>
                           {creatorName(notice.created_by)}
                         </td>
-                        <td className="px-4 py-3">
+                        <td className={styles.td}>
                           {notice.requires_ack ? (
-                            <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-amber-100 text-amber-700">
+                            <span
+                              className={`${styles.badge} ${styles.badgeAck}`}
+                            >
                               Yes
                             </span>
                           ) : (
-                            <span className="text-slate-400 text-xs">—</span>
+                            <span style={{ color: "var(--text-muted)" }}>
+                              —
+                            </span>
                           )}
                         </td>
-                        <td className="px-4 py-3 text-right">
+                        <td
+                          className={styles.td}
+                          style={{ textAlign: "right" }}
+                        >
                           <svg
-                            className={`w-4 h-4 text-slate-400 inline transition-transform ${isExpanded ? "rotate-180" : ""}`}
+                            width="14"
+                            height="14"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
+                            style={{
+                              color: "var(--text-muted)",
+                              display: "inline",
+                              transition: "transform 0.18s ease",
+                              transform: isExpanded
+                                ? "rotate(180deg)"
+                                : "rotate(0deg)",
+                            }}
                           >
                             <path
                               strokeLinecap="round"
@@ -416,11 +423,8 @@ function AdminView({ user, notices, noticeReads, users, addNotice }) {
                         </td>
                       </tr>
                       {isExpanded && (
-                        <tr
-                          key={`${notice.id}-receipts`}
-                          className="border-b border-slate-100"
-                        >
-                          <td colSpan={7} className="p-0">
+                        <tr key={`${notice.id}-receipts`}>
+                          <td colSpan={7} style={{ padding: 0 }}>
                             <ReadReceiptsPanel
                               notice={notice}
                               noticeReads={noticeReads}
@@ -471,84 +475,75 @@ function DriverView({ user, notices, noticeReads, markNoticeRead }) {
   }
 
   return (
-    <div className="p-6 space-y-5">
-      <div>
-        <h1 className="text-xl font-bold text-slate-800">Notices</h1>
-        <p className="text-sm text-slate-500 mt-0.5">
-          Important updates from your depot and operations team.
-        </p>
+    <div className={styles.page}>
+      <div className={styles.header}>
+        <div>
+          <h1 className={styles.pageTitle}>Notices</h1>
+          <p className={styles.pageSubtitle}>
+            Important updates from your depot and operations team.
+          </p>
+        </div>
       </div>
 
       {sorted.length === 0 ? (
-        <div className="py-16 text-center">
-          <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-3">
-            <svg
-              className="w-6 h-6 text-slate-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1.5}
-                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-              />
-            </svg>
-          </div>
-          <p className="text-sm font-medium text-slate-600">
-            No notices for you yet
-          </p>
+        <div className={styles.emptyState}>
+          <svg
+            width="40"
+            height="40"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            style={{
+              color: "var(--text-muted)",
+              display: "block",
+              margin: "0 auto var(--sp-3)",
+            }}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.5}
+              d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+            />
+          </svg>
+          <p>No notices for you yet.</p>
         </div>
       ) : (
-        <div className="space-y-3">
+        <div className={styles.noticeList}>
           {sorted.map((notice) => {
             const read = isRead(notice.id);
             return (
               <div
                 key={notice.id}
                 onClick={() => handleClick(notice)}
-                className={`bg-white rounded-xl border shadow-sm cursor-pointer transition-all hover:shadow-md ${
-                  read
-                    ? "border-slate-200"
-                    : "border-blue-200 border-l-4 border-l-blue-500"
-                }`}
+                className={`${styles.noticeCard} ${read ? styles.noticeCardRead : styles.noticeCardUnread}`}
               >
-                <div className="px-5 py-4">
-                  <div className="flex items-start justify-between gap-3 mb-2">
-                    <h3
-                      className={`text-sm font-semibold leading-snug ${read ? "text-slate-700" : "text-slate-900"}`}
-                    >
-                      {notice.title}
-                    </h3>
-                    <div className="flex items-center gap-2 flex-shrink-0">
-                      {notice.requires_ack && read && (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700">
-                          <svg
-                            className="w-3 h-3"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                          Acknowledged
-                        </span>
-                      )}
-                      {!read && (
-                        <span className="w-2.5 h-2.5 rounded-full bg-blue-500 flex-shrink-0 mt-0.5" />
-                      )}
-                    </div>
+                <div className="flex items-start justify-between gap-3">
+                  <h3 className={styles.noticeTitle}>{notice.title}</h3>
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    {notice.requires_ack && read && (
+                      <span className={`${styles.badge} ${styles.badgeRead}`}>
+                        <svg
+                          width="10"
+                          height="10"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                        Acknowledged
+                      </span>
+                    )}
+                    {!read && <span className={styles.unreadDot} />}
                   </div>
-                  <p className="text-sm text-slate-600 leading-relaxed line-clamp-3">
-                    {notice.body}
-                  </p>
-                  <p className="text-xs text-slate-400 mt-3">
-                    {formatDate(notice.publish_at)}
-                  </p>
+                </div>
+                <p className={styles.noticeBody}>{notice.body}</p>
+                <div className={styles.noticeMeta}>
+                  <span>{formatDate(notice.publish_at)}</span>
                 </div>
               </div>
             );

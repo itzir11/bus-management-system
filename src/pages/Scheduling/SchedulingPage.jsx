@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import styles from "./SchedulingPage.module.css";
 
 export default function SchedulingPage() {
   const { user } = useAuth();
@@ -8,11 +9,12 @@ export default function SchedulingPage() {
 
   if (user.role === "control_operator") {
     return (
-      <div className="p-6">
-        <div className="max-w-lg mx-auto mt-16 text-center">
-          <div className="w-14 h-14 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-4">
+      <div className={styles.page}>
+        <div className={styles.accessDenied}>
+          <div className={styles.accessIcon}>
             <svg
-              className="w-7 h-7 text-slate-400"
+              width="28"
+              height="28"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -25,10 +27,8 @@ export default function SchedulingPage() {
               />
             </svg>
           </div>
-          <h2 className="text-lg font-semibold text-slate-700 mb-2">
-            Read-Only Access
-          </h2>
-          <p className="text-sm text-slate-500">
+          <h2 className={styles.accessTitle}>Read-Only Access</h2>
+          <p className={styles.accessDesc}>
             You have read-only access to this module. Scheduling and roster
             management is restricted to depot managers and administrators.
           </p>
@@ -37,15 +37,14 @@ export default function SchedulingPage() {
     );
   }
 
-  const cards = [
+  const modules = [
     {
       to: "/scheduling/routes",
-      title: "Manage Routes",
-      description:
-        "View, add, and manage bus routes and their ordered stop sequences. Assign routes to depots and configure stop timings.",
+      variant: "Primary",
       icon: (
         <svg
-          className="w-6 h-6 text-blue-600"
+          width="24"
+          height="24"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -58,16 +57,16 @@ export default function SchedulingPage() {
           />
         </svg>
       ),
-      color: "blue",
+      title: "Manage Routes",
+      desc: "Create and edit bus routes with stops and timings",
     },
     {
       to: "/scheduling/roster",
-      title: "Roster & Duties",
-      description:
-        "Plan weekly driver rosters, assign vehicles and routes to drivers, and publish duties for the upcoming week.",
+      variant: "Success",
       icon: (
         <svg
-          className="w-6 h-6 text-indigo-600"
+          width="24"
+          height="24"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -80,78 +79,41 @@ export default function SchedulingPage() {
           />
         </svg>
       ),
-      color: "indigo",
+      title: "Roster & Duties",
+      desc: "Assign drivers to vehicles and publish weekly duties",
     },
   ];
 
-  const colorMap = {
-    blue: {
-      bg: "bg-blue-50",
-      border: "border-blue-200",
-      hover: "hover:border-blue-400 hover:bg-blue-50",
-      iconBg: "bg-blue-100",
-      arrow: "text-blue-500",
-    },
-    indigo: {
-      bg: "bg-indigo-50",
-      border: "border-indigo-200",
-      hover: "hover:border-indigo-400 hover:bg-indigo-50",
-      iconBg: "bg-indigo-100",
-      arrow: "text-indigo-500",
-    },
-  };
-
   return (
-    <div className="p-6 space-y-6">
-      <div>
-        <h1 className="text-xl font-bold text-slate-800">Scheduling</h1>
-        <p className="text-sm text-slate-500 mt-0.5">
-          Manage routes, driver rosters, and duty assignments.
-        </p>
+    <div className={styles.page}>
+      <div className={styles.header}>
+        <div>
+          <h1 className={styles.pageTitle}>Scheduling</h1>
+          <p className={styles.pageSubtitle}>
+            Manage routes, driver rosters, and duty assignments.
+          </p>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-3xl">
-        {cards.map((card) => {
-          const c = colorMap[card.color];
-          return (
-            <Link
-              key={card.to}
-              to={card.to}
-              className={`group block bg-white border ${c.border} ${c.hover} rounded-xl p-6 shadow-sm transition-all duration-150`}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl">
+        {modules.map((mod) => (
+          <Link
+            key={mod.to}
+            to={mod.to}
+            className={`${styles.moduleCard} ${styles[`moduleCard${mod.variant}`]}`}
+          >
+            <div
+              className={`${styles.moduleIcon} ${styles[`moduleIcon${mod.variant}`]}`}
             >
-              <div className="flex items-start gap-4">
-                <div
-                  className={`flex-shrink-0 w-11 h-11 rounded-lg ${c.iconBg} flex items-center justify-center`}
-                >
-                  {card.icon}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-base font-semibold text-slate-800">
-                      {card.title}
-                    </h2>
-                    <svg
-                      className={`w-4 h-4 ${c.arrow} opacity-0 group-hover:opacity-100 transition-opacity`}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </div>
-                  <p className="text-sm text-slate-500 mt-1 leading-relaxed">
-                    {card.description}
-                  </p>
-                </div>
-              </div>
-            </Link>
-          );
-        })}
+              {mod.icon}
+            </div>
+            <div>
+              <div className={styles.moduleCardTitle}>{mod.title}</div>
+              <p className={styles.moduleCardDesc}>{mod.desc}</p>
+            </div>
+            <span className={styles.moduleCardLink}>Open →</span>
+          </Link>
+        ))}
       </div>
     </div>
   );

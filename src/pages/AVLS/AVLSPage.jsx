@@ -22,6 +22,7 @@ import {
   getDepotById,
   formatTime,
 } from "../../utils/helpers";
+import styles from "./AVLS.module.css";
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -47,9 +48,7 @@ const TODAY = "2026-05-31";
 
 function FlyToVehicle({ position }) {
   const map = useMap();
-  if (position) {
-    map.flyTo([position.lat, position.lng], 15, { duration: 1 });
-  }
+  if (position) map.flyTo([position.lat, position.lng], 15, { duration: 1 });
   return null;
 }
 
@@ -60,16 +59,16 @@ function TrailPolyline({ vehicleId, gpsPings }) {
     return d;
   }, []);
 
-  const positions = useMemo(() => {
-    return gpsPings
-      .filter((p) => {
-        if (p.vehicle_id !== vehicleId) return false;
-        const t = new Date(p.ts);
-        return t >= thirtyMinAgo;
-      })
-      .sort((a, b) => new Date(a.ts) - new Date(b.ts))
-      .map((p) => [p.lat, p.lng]);
-  }, [vehicleId, gpsPings, thirtyMinAgo]);
+  const positions = useMemo(
+    () =>
+      gpsPings
+        .filter(
+          (p) => p.vehicle_id === vehicleId && new Date(p.ts) >= thirtyMinAgo,
+        )
+        .sort((a, b) => new Date(a.ts) - new Date(b.ts))
+        .map((p) => [p.lat, p.lng]),
+    [vehicleId, gpsPings, thirtyMinAgo],
+  );
 
   if (positions.length < 2) return null;
   return (
@@ -86,7 +85,6 @@ export default function AVLSPage() {
   const { vehicles, depots, duties, users, routes, gpsPings } = useData();
 
   const isDepotManager = user?.role === "depot_manager";
-
   const [selectedDepot, setSelectedDepot] = useState(
     isDepotManager ? user.depot_id : "",
   );
@@ -94,10 +92,13 @@ export default function AVLSPage() {
 
   const livePositions = useTickSimulator(vehicles, gpsPings, true);
 
-  const filteredVehicles = useMemo(() => {
-    if (!selectedDepot) return vehicles;
-    return vehicles.filter((v) => v.depot_id === selectedDepot);
-  }, [vehicles, selectedDepot]);
+  const filteredVehicles = useMemo(
+    () =>
+      selectedDepot
+        ? vehicles.filter((v) => v.depot_id === selectedDepot)
+        : vehicles,
+    [vehicles, selectedDepot],
+  );
 
   const todayDuties = useMemo(
     () => duties.filter((d) => d.date === TODAY),
@@ -114,75 +115,77 @@ export default function AVLSPage() {
       selectedVehicleId ? getVehicleById(vehicles, selectedVehicleId) : null,
     [vehicles, selectedVehicleId],
   );
-
   const selectedDuty = useMemo(
     () => (selectedVehicleId ? getDutyForVehicle(selectedVehicleId) : null),
     [selectedVehicleId, getDutyForVehicle],
   );
-
   const selectedDriver = useMemo(
     () => (selectedDuty ? getUserById(users, selectedDuty.driver_id) : null),
     [selectedDuty, users],
   );
-
   const selectedDepotData = useMemo(
     () =>
       selectedVehicle ? getDepotById(depots, selectedVehicle.depot_id) : null,
     [selectedVehicle, depots],
   );
-
-  const selectedRoute = useMemo(() => {
-    if (!selectedDuty) return null;
-    return routes.find((r) => r.id === selectedDuty.route_id) ?? null;
-  }, [selectedDuty, routes]);
-
+  const selectedRoute = useMemo(
+    () =>
+      selectedDuty
+        ? (routes.find((r) => r.id === selectedDuty.route_id) ?? null)
+        : null,
+    [selectedDuty, routes],
+  );
   const selectedPosition = selectedVehicleId
     ? livePositions[selectedVehicleId]
     : null;
 
+  const activeCount = filteredVehicles.filter(
+    (v) => livePositions[v.id],
+  ).length;
+
   return (
-    <div className="flex flex-col" style={{ height: "calc(100vh - 64px)" }}>
-      <div className="flex items-center gap-3 px-4 py-2 bg-white border-b border-slate-200 z-10 shrink-0">
-        <span className="text-sm font-semibold text-slate-700">
-          Live Vehicle Map
-        </span>
-        <div className="flex items-center gap-2 ml-auto">
-          <label htmlFor="depot-filter" className="text-xs text-slate-500">
-            Depot:
-          </label>
-          <select
-            id="depot-filter"
-            value={selectedDepot}
-            onChange={(e) => setSelectedDepot(e.target.value)}
-            disabled={isDepotManager}
-            className="text-sm border border-slate-200 rounded px-2 py-1 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-60 disabled:cursor-not-allowed"
-          >
-            <option value="">All Depots</option>
-            {depots.map((d) => (
-              <option key={d.id} value={d.id}>
-                {d.name}
-              </option>
-            ))}
-          </select>
+    <div className={styles.page}>
+      {/* Toolbar */}
+      <div className={styles.toolbar}>
+        <span className={styles.toolbarTitle}>Live Vehicle Map</span>
+
+        <div className={styles.liveIndicator}>
+          <span className={styles.liveDot} />
+          LIVE
         </div>
-        <div className="flex items-center gap-3 text-xs text-slate-500">
-          <span className="flex items-center gap-1">
-            <span className="inline-block w-2.5 h-2.5 rounded-full bg-green-500"></span>
-            Moving
+
+        <span className={styles.vehicleCount}>{activeCount} active</span>
+
+        <select
+          value={selectedDepot}
+          onChange={(e) => setSelectedDepot(e.target.value)}
+          disabled={isDepotManager}
+          className={styles.select}
+        >
+          <option value="">All Depots</option>
+          {depots.map((d) => (
+            <option key={d.id} value={d.id}>
+              {d.name}
+            </option>
+          ))}
+        </select>
+
+        <div className={styles.legend}>
+          <span className={styles.legendItem}>
+            <span className={styles.legendDotMoving} /> Moving
           </span>
-          <span className="flex items-center gap-1">
-            <span className="inline-block w-2.5 h-2.5 rounded-full bg-slate-400"></span>
-            Idle
+          <span className={styles.legendItem}>
+            <span className={styles.legendDotIdle} /> Idle
           </span>
         </div>
       </div>
 
-      <div className="relative flex-1">
+      {/* Map */}
+      <div className={styles.mapWrap}>
         <MapContainer
           center={[28.57, 77.32]}
           zoom={12}
           style={{ height: "100%", width: "100%" }}
-          zoomControl={true}
         >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -190,7 +193,6 @@ export default function AVLSPage() {
           />
 
           {selectedPosition && <FlyToVehicle position={selectedPosition} />}
-
           {selectedVehicleId && (
             <TrailPolyline vehicleId={selectedVehicleId} gpsPings={gpsPings} />
           )}
@@ -198,39 +200,48 @@ export default function AVLSPage() {
           {filteredVehicles.map((vehicle) => {
             const pos = livePositions[vehicle.id];
             if (!pos) return null;
-
             const duty = getDutyForVehicle(vehicle.id);
             const driver = duty ? getUserById(users, duty.driver_id) : null;
             const route = duty
               ? routes.find((r) => r.id === duty.route_id)
               : null;
             const isMoving = pos.speed_kmh > 5;
-            const icon = isMoving ? greenIcon : greyIcon;
-
             return (
               <Marker
                 key={vehicle.id}
                 position={[pos.lat, pos.lng]}
-                icon={icon}
+                icon={isMoving ? greenIcon : greyIcon}
                 eventHandlers={{
                   click: () => setSelectedVehicleId(vehicle.id),
                 }}
               >
                 <Popup>
-                  <div className="text-sm space-y-1 min-w-[160px]">
-                    <div className="font-semibold text-slate-800">
+                  <div
+                    style={{
+                      fontFamily: "var(--font-sans)",
+                      fontSize: "var(--text-sm)",
+                      minWidth: 160,
+                    }}
+                  >
+                    <div style={{ fontWeight: 700, marginBottom: 4 }}>
                       {vehicle.reg_no}
                     </div>
-                    <div className="text-slate-600">
+                    <div style={{ color: "var(--text-secondary)" }}>
                       Driver: {driver ? driver.full_name : "—"}
                     </div>
-                    <div className="text-slate-600">
+                    <div style={{ color: "var(--text-secondary)" }}>
                       Route: {route ? route.name : "—"}
                     </div>
-                    <div className="text-slate-600">
+                    <div style={{ color: "var(--text-secondary)" }}>
                       Speed: {pos.speed_kmh} km/h
                     </div>
-                    <div className="text-slate-400 text-xs">
+                    <div
+                      style={{
+                        color: "var(--text-muted)",
+                        fontSize: "var(--text-xs)",
+                        marginTop: 4,
+                      }}
+                    >
                       Updated: {formatTime(pos.ts)}
                     </div>
                   </div>
@@ -240,19 +251,19 @@ export default function AVLSPage() {
           })}
         </MapContainer>
 
+        {/* Side panel */}
         {selectedVehicle && (
-          <div className="absolute top-3 right-3 z-[1000] w-72 bg-white rounded-xl shadow-xl border border-slate-200 overflow-hidden">
-            <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100">
-              <span className="font-semibold text-slate-800 text-sm">
-                Vehicle Details
-              </span>
+          <div className={styles.sidePanel}>
+            <div className={styles.sidePanelHeader}>
+              <span className={styles.sidePanelTitle}>Vehicle Details</span>
               <button
+                className={styles.closeBtn}
                 onClick={() => setSelectedVehicleId(null)}
-                className="text-slate-400 hover:text-slate-600 transition-colors"
-                aria-label="Close panel"
+                aria-label="Close"
               >
                 <svg
-                  className="w-4 h-4"
+                  width="16"
+                  height="16"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -267,83 +278,111 @@ export default function AVLSPage() {
               </button>
             </div>
 
-            <div className="px-4 py-3 space-y-3">
-              <div>
-                <div className="text-xs text-slate-400 uppercase tracking-wide mb-1">
-                  Vehicle
+            <div className={styles.sidePanelBody}>
+              <div className={styles.infoGroup}>
+                <p className={styles.infoGroupTitle}>Vehicle</p>
+                <div className={styles.infoRow}>
+                  <span className={styles.infoLabel}>Reg No</span>
+                  <span className={styles.infoValueMono}>
+                    {selectedVehicle.reg_no}
+                  </span>
                 </div>
-                <div className="font-mono font-semibold text-slate-800">
-                  {selectedVehicle.reg_no}
+                <div className={styles.infoRow}>
+                  <span className={styles.infoLabel}>Type</span>
+                  <span className={styles.infoValue}>
+                    {selectedVehicle.type} · {selectedVehicle.capacity} seats
+                  </span>
                 </div>
-                <div className="text-xs text-slate-500 mt-0.5">
-                  {selectedVehicle.type} · Capacity {selectedVehicle.capacity}
-                </div>
-                <div className="text-xs text-slate-500">
-                  Depot: {selectedDepotData?.name ?? "—"}
+                <div className={styles.infoRow}>
+                  <span className={styles.infoLabel}>Depot</span>
+                  <span className={styles.infoValue}>
+                    {selectedDepotData?.name ?? "—"}
+                  </span>
                 </div>
               </div>
 
-              <div className="border-t border-slate-100 pt-3">
-                <div className="text-xs text-slate-400 uppercase tracking-wide mb-1">
-                  Driver
-                </div>
+              <hr className={styles.divider} />
+
+              <div className={styles.infoGroup}>
+                <p className={styles.infoGroupTitle}>Driver</p>
                 {selectedDriver ? (
                   <>
-                    <div className="text-sm font-medium text-slate-700">
-                      {selectedDriver.full_name}
+                    <div className={styles.infoRow}>
+                      <span className={styles.infoLabel}>Name</span>
+                      <span className={styles.infoValue}>
+                        {selectedDriver.full_name}
+                      </span>
                     </div>
-                    <div className="text-xs text-slate-500">
-                      {selectedDriver.phone}
+                    <div className={styles.infoRow}>
+                      <span className={styles.infoLabel}>Phone</span>
+                      <span className={styles.infoValue}>
+                        {selectedDriver.phone}
+                      </span>
                     </div>
                   </>
                 ) : (
-                  <div className="text-sm text-slate-400">
+                  <span
+                    className={styles.infoValue}
+                    style={{ color: "var(--text-muted)" }}
+                  >
                     No duty assigned today
-                  </div>
+                  </span>
                 )}
               </div>
 
-              <div className="border-t border-slate-100 pt-3">
-                <div className="text-xs text-slate-400 uppercase tracking-wide mb-1">
-                  Route
-                </div>
-                {selectedRoute ? (
-                  <div className="text-sm text-slate-700">
-                    {selectedRoute.name}
-                  </div>
-                ) : (
-                  <div className="text-sm text-slate-400">—</div>
-                )}
+              <hr className={styles.divider} />
+
+              <div className={styles.infoGroup}>
+                <p className={styles.infoGroupTitle}>Route</p>
+                <span className={styles.infoValue}>
+                  {selectedRoute ? selectedRoute.name : "—"}
+                </span>
               </div>
 
               {selectedPosition && (
-                <div className="border-t border-slate-100 pt-3">
-                  <div className="text-xs text-slate-400 uppercase tracking-wide mb-1">
-                    Live Position
+                <>
+                  <hr className={styles.divider} />
+                  <div className={styles.infoGroup}>
+                    <p className={styles.infoGroupTitle}>Live Position</p>
+                    <div className={styles.infoRow}>
+                      <span className={styles.infoLabel}>Speed</span>
+                      <span
+                        className={`${styles.speedBadge} ${selectedPosition.speed_kmh > 5 ? styles.speedMoving : styles.speedIdle}`}
+                      >
+                        {selectedPosition.speed_kmh} km/h
+                      </span>
+                    </div>
+                    <div className={styles.infoRow}>
+                      <span className={styles.infoLabel}>Coords</span>
+                      <span
+                        className={styles.infoValue}
+                        style={{
+                          fontFamily: "var(--font-mono)",
+                          fontSize: "var(--text-xs)",
+                        }}
+                      >
+                        {selectedPosition.lat.toFixed(4)},{" "}
+                        {selectedPosition.lng.toFixed(4)}
+                      </span>
+                    </div>
+                    <div className={styles.infoRow}>
+                      <span className={styles.infoLabel}>Updated</span>
+                      <span className={styles.infoValue}>
+                        {formatTime(selectedPosition.ts)}
+                      </span>
+                    </div>
                   </div>
-                  <div className="text-xs text-slate-600">
-                    {selectedPosition.lat.toFixed(4)},{" "}
-                    {selectedPosition.lng.toFixed(4)}
-                  </div>
-                  <div className="text-xs text-slate-600">
-                    Speed: {selectedPosition.speed_kmh} km/h
-                  </div>
-                  <div className="text-xs text-slate-400">
-                    Updated: {formatTime(selectedPosition.ts)}
-                  </div>
-                </div>
+                </>
               )}
 
-              <div className="border-t border-slate-100 pt-3">
-                <button
-                  onClick={() =>
-                    navigate(`/avls/history?vehicle=${selectedVehicle.id}`)
-                  }
-                  className="w-full text-center text-sm text-blue-600 hover:text-blue-800 font-medium transition-colors"
-                >
-                  View Full History →
-                </button>
-              </div>
+              <button
+                className={styles.historyLink}
+                onClick={() =>
+                  navigate(`/avls/history?vehicle=${selectedVehicle.id}`)
+                }
+              >
+                View Full History →
+              </button>
             </div>
           </div>
         )}

@@ -6,6 +6,7 @@ import {
   getRouteById,
   getVehicleById,
 } from "../../utils/helpers";
+import styles from "./RosterPage.module.css";
 
 const TODAY = "2026-05-31";
 
@@ -31,24 +32,29 @@ function fmtWeekDay(dateStr) {
   });
 }
 
-const STATUS_CELL = {
-  draft: "bg-slate-100 border border-slate-200 text-slate-600",
-  published: "bg-blue-50 border border-blue-200 text-blue-700",
-  acknowledged: "bg-green-50 border border-green-200 text-green-700",
-  completed: "bg-slate-200 border border-slate-300 text-slate-500",
+const STATUS_CELL_CLASS = {
+  draft: styles.dutyCellDraft,
+  published: styles.dutyCellPublished,
+  acknowledged: styles.dutyCellAcknowledged,
+  completed: styles.dutyCellCompleted,
+};
+
+const STATUS_BADGE_CLASS = {
+  draft: styles.dutyCellStatusBadgeDraft,
+  published: styles.dutyCellStatusBadgePublished,
+  acknowledged: styles.dutyCellStatusBadgeAcknowledged,
+  completed: styles.dutyCellStatusBadgeCompleted,
 };
 
 function DutyCell({ duty, vehicle, route, canEdit, onEdit }) {
   if (!duty) {
     return (
-      <td className="px-2 py-2 min-w-[130px]">
+      <td className={styles.rosterTd}>
         {canEdit ? (
-          <button
-            onClick={onEdit}
-            className="w-full h-12 flex items-center justify-center rounded-lg border-2 border-dashed border-slate-200 text-slate-300 hover:border-blue-400 hover:text-blue-400 hover:bg-blue-50 transition-all"
-          >
+          <button className={styles.addDutyBtn} onClick={onEdit} type="button">
             <svg
-              className="w-4 h-4"
+              width="16"
+              height="16"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -62,30 +68,34 @@ function DutyCell({ duty, vehicle, route, canEdit, onEdit }) {
             </svg>
           </button>
         ) : (
-          <div className="w-full h-12 rounded-lg bg-slate-50" />
+          <div className={styles.emptyDutyCell} />
         )}
       </td>
     );
   }
 
-  const cls = STATUS_CELL[duty.status] ?? STATUS_CELL.draft;
+  const statusCls = STATUS_CELL_CLASS[duty.status] ?? STATUS_CELL_CLASS.draft;
+  const badgeCls = STATUS_BADGE_CLASS[duty.status] ?? STATUS_BADGE_CLASS.draft;
 
   return (
-    <td className="px-2 py-2 min-w-[130px]">
+    <td className={styles.rosterTd}>
       <div
-        className={`rounded-lg px-2 py-1.5 ${cls} ${canEdit ? "cursor-pointer hover:opacity-80" : ""} transition-opacity`}
+        className={`${styles.dutyCell} ${statusCls} ${canEdit ? styles.dutyCellClickable : ""}`}
         onClick={canEdit ? onEdit : undefined}
         title={`${duty.start_time}–${duty.end_time}`}
       >
-        <div className="text-xs font-semibold truncate">
-          {vehicle?.reg_no ?? duty.vehicle_id}
-        </div>
-        <div className="text-xs truncate opacity-80">
+        <div className={styles.dutyCellRoute}>
           {route?.code ?? duty.route_id}
         </div>
-        <div className="text-xs opacity-60 tabular-nums">
+        <div className={styles.dutyCellVehicle}>
+          {vehicle?.reg_no ?? duty.vehicle_id}
+        </div>
+        <div className={styles.dutyCellTime}>
           {duty.start_time}–{duty.end_time}
         </div>
+        <span className={`${styles.dutyCellStatusBadge} ${badgeCls}`}>
+          {duty.status}
+        </span>
       </div>
     </td>
   );
@@ -137,18 +147,16 @@ function AssignModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-      <div className="bg-white rounded-xl shadow-xl w-full max-w-md">
-        <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100">
-          <h2 className="text-base font-semibold text-slate-800">
+    <div className={styles.modalBackdrop}>
+      <div className={styles.modal}>
+        <div className={styles.modalHeader}>
+          <h2 className={styles.modalTitle}>
             {existingDuty ? "Edit Duty" : "Assign Duty"}
           </h2>
-          <button
-            onClick={onClose}
-            className="w-7 h-7 flex items-center justify-center rounded hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors"
-          >
+          <button className={styles.closeBtn} onClick={onClose} type="button">
             <svg
-              className="w-4 h-4"
+              width="16"
+              height="16"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -163,40 +171,30 @@ function AssignModal({
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="px-5 py-4 space-y-4">
-          {error && (
-            <div className="px-3 py-2 rounded-lg bg-red-50 border border-red-200 text-sm text-red-700">
-              {error}
-            </div>
-          )}
+        <form onSubmit={handleSubmit} className={styles.modalBody}>
+          {error && <div className={styles.errorBox}>{error}</div>}
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1">
-                Driver
-              </label>
-              <div className="px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 truncate">
+              <label className={styles.label}>Driver</label>
+              <div className={`${styles.input} ${styles.inputReadonly}`}>
                 {driverName}
               </div>
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1">
-                Date
-              </label>
-              <div className="px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700">
+              <label className={styles.label}>Date</label>
+              <div className={`${styles.input} ${styles.inputReadonly}`}>
                 {date}
               </div>
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">
-              Vehicle
-            </label>
+            <label className={styles.label}>Vehicle</label>
             <select
               value={vehicleId}
               onChange={(e) => setVehicleId(e.target.value)}
-              className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className={styles.select}
             >
               <option value="">— Select vehicle —</option>
               {depotVehicles.map((v) => (
@@ -208,13 +206,11 @@ function AssignModal({
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">
-              Route
-            </label>
+            <label className={styles.label}>Route</label>
             <select
               value={routeId}
               onChange={(e) => setRouteId(e.target.value)}
-              className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className={styles.select}
             >
               <option value="">— Select route —</option>
               {depotRoutes.map((r) => (
@@ -227,45 +223,42 @@ function AssignModal({
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">
-                Start Time
-              </label>
+              <label className={styles.label}>Start Time</label>
               <input
                 type="time"
                 value={startTime}
                 onChange={(e) => setStartTime(e.target.value)}
-                className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className={styles.input}
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">
-                End Time
-              </label>
+              <label className={styles.label}>End Time</label>
               <input
                 type="time"
                 value={endTime}
                 onChange={(e) => setEndTime(e.target.value)}
-                className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className={styles.input}
               />
             </div>
           </div>
-
-          <div className="flex items-center justify-end gap-3 pt-2">
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-800 transition-colors"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              {existingDuty ? "Update Duty" : "Assign Duty"}
-            </button>
-          </div>
         </form>
+
+        <div className={styles.modalFooter}>
+          <button
+            type="button"
+            onClick={onClose}
+            className={`${styles.btn} ${styles.btnSecondary}`}
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            onClick={handleSubmit}
+            className={`${styles.btn} ${styles.btnPrimary}`}
+          >
+            {existingDuty ? "Update Duty" : "Assign Duty"}
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -375,11 +368,11 @@ export default function RosterPage() {
   const depot = depotId ? getDepotById(depots, depotId) : null;
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="flex items-start justify-between flex-wrap gap-3">
+    <div className={`${styles.page} p-6`}>
+      <div className={styles.header}>
         <div>
-          <h1 className="text-xl font-bold text-slate-800">Roster & Duties</h1>
-          <p className="text-sm text-slate-500 mt-0.5">
+          <h1 className={styles.pageTitle}>Roster</h1>
+          <p className={styles.pageSubtitle}>
             Week of {WEEK_DATES[0]} – {WEEK_DATES[WEEK_DATES.length - 1]}
             {depot && ` · ${depot.name}`}
           </p>
@@ -388,10 +381,11 @@ export default function RosterPage() {
           <button
             onClick={handlePublishAll}
             disabled={draftCount === 0}
-            className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors shadow-sm"
+            className={`${styles.btn} ${styles.btnSuccess}`}
           >
             <svg
-              className="w-4 h-4"
+              width="16"
+              height="16"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -405,51 +399,33 @@ export default function RosterPage() {
             </svg>
             Publish All Drafts
             {draftCount > 0 && (
-              <span className="ml-1 bg-white/20 rounded-full px-1.5 py-0.5 text-xs font-bold">
-                {draftCount}
-              </span>
+              <span className={styles.draftBadge}>{draftCount}</span>
             )}
           </button>
         )}
       </div>
 
-      <div className="flex gap-3 flex-wrap text-xs">
-        {[
-          {
-            label: "Draft",
-            cls: "bg-slate-100 border border-slate-200 text-slate-600",
-          },
-          {
-            label: "Published",
-            cls: "bg-blue-50 border border-blue-200 text-blue-700",
-          },
-          {
-            label: "Acknowledged",
-            cls: "bg-green-50 border border-green-200 text-green-700",
-          },
-          {
-            label: "Completed",
-            cls: "bg-slate-200 border border-slate-300 text-slate-500",
-          },
-        ].map(({ label, cls }) => (
-          <span
-            key={label}
-            className={`px-2 py-0.5 rounded text-xs font-medium ${cls}`}
-          >
-            {label}
-          </span>
-        ))}
+      <div className={styles.legendWrap}>
+        <span className={`${styles.legendBadge} ${styles.legendDraft}`}>
+          Draft
+        </span>
+        <span className={`${styles.legendBadge} ${styles.legendPublished}`}>
+          Published
+        </span>
+        <span className={`${styles.legendBadge} ${styles.legendAcknowledged}`}>
+          Acknowledged
+        </span>
+        <span className={`${styles.legendBadge} ${styles.legendCompleted}`}>
+          Completed
+        </span>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-        <div className="overflow-x-auto">
-          <table
-            className="text-sm border-collapse"
-            style={{ minWidth: "900px" }}
-          >
+      <div className={styles.card}>
+        <div className={styles.rosterWrap}>
+          <table className={styles.rosterTable}>
             <thead>
-              <tr className="bg-slate-50 border-b border-slate-200">
-                <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wide whitespace-nowrap sticky left-0 bg-slate-50 z-10 min-w-[150px] border-r border-slate-100">
+              <tr>
+                <th className={`${styles.rosterTh} ${styles.rosterDriverTh}`}>
                   Driver
                 </th>
                 {WEEK_DATES.map((date) => {
@@ -457,13 +433,12 @@ export default function RosterPage() {
                   return (
                     <th
                       key={date}
-                      className={`px-2 py-3 text-xs font-semibold uppercase tracking-wide whitespace-nowrap min-w-[130px] text-center ${
-                        isToday ? "bg-blue-600 text-white" : "text-slate-500"
-                      }`}
+                      className={`${styles.rosterTh} ${isToday ? styles.rosterThToday : ""}`}
                     >
                       {fmtWeekDay(date)}
                       {isToday && (
-                        <span className="ml-1 text-blue-200 font-normal normal-case text-xs">
+                        <span className={styles.rosterTodayLabel}>
+                          {" "}
                           (today)
                         </span>
                       )}
@@ -472,20 +447,15 @@ export default function RosterPage() {
                 })}
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-50">
+            <tbody>
               {drivers.map((driver) => {
                 const driverDepot = getDepotById(depots, driver.depot_id);
                 return (
-                  <tr
-                    key={driver.id}
-                    className="hover:bg-slate-50/50 transition-colors"
-                  >
-                    <td className="px-4 py-2 sticky left-0 bg-white z-10 border-r border-slate-100 min-w-[150px]">
-                      <div className="font-medium text-slate-700 truncate">
-                        {driver.full_name}
-                      </div>
+                  <tr key={driver.id}>
+                    <td className={styles.rosterDriverTd}>
+                      <div>{driver.full_name}</div>
                       {!depotId && (
-                        <div className="text-xs text-slate-400 truncate">
+                        <div className={styles.rosterDriverSubtext}>
                           {driverDepot?.code ?? driver.depot_id}
                         </div>
                       )}
@@ -516,7 +486,7 @@ export default function RosterPage() {
                 <tr>
                   <td
                     colSpan={WEEK_DATES.length + 1}
-                    className="text-center py-12 text-slate-400 text-sm"
+                    className={styles.emptyState}
                   >
                     No drivers found.
                   </td>

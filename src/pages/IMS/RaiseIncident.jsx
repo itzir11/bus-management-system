@@ -2,6 +2,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useData } from "../../context/DataContext";
+import styles from "./RaiseIncident.module.css";
+
+const SEVERITY_OPTIONS = [
+  { value: "P1", label: "Critical", tileClass: styles.severityTileP1 },
+  { value: "P2", label: "Major", tileClass: styles.severityTileP2 },
+  { value: "P3", label: "Minor", tileClass: styles.severityTileP3 },
+];
 
 export default function RaiseIncident() {
   const navigate = useNavigate();
@@ -67,15 +74,14 @@ export default function RaiseIncident() {
   }
 
   return (
-    <div className="p-6">
-      <div className="max-w-xl mx-auto space-y-5">
+    <div className={`${styles.page}`}>
+      <div className="max-w-2xl mx-auto space-y-5">
+        {/* Breadcrumb */}
         <div className="flex items-center gap-3">
-          <button
-            onClick={() => navigate("/ims")}
-            className="flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-700 transition-colors"
-          >
+          <button onClick={() => navigate("/ims")} className={styles.backLink}>
             <svg
-              className="w-4 h-4"
+              width="16"
+              height="16"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -89,148 +95,171 @@ export default function RaiseIncident() {
             </svg>
             Incidents
           </button>
-          <span className="text-slate-300">/</span>
-          <span className="text-sm font-medium text-slate-700">
-            Raise Incident
-          </span>
+          <span className={styles.breadcrumbSep}>/</span>
+          <span className={styles.breadcrumbCurrent}>Raise Incident</span>
         </div>
 
+        {/* Page heading */}
         <div>
-          <h1 className="text-xl font-bold text-slate-800">Raise Incident</h1>
-          <p className="text-sm text-slate-500 mt-0.5">
+          <h1 className={styles.pageTitle}>Raise Incident</h1>
+          <p className={styles.pageSubtitle}>
             Report a new operational incident.
           </p>
         </div>
 
-        <form
-          onSubmit={handleSubmit}
-          className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 space-y-5"
-        >
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">
-                Type <span className="text-red-500">*</span>
-              </label>
-              <select
-                value={type}
-                onChange={(e) => setType(e.target.value)}
-                className="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="breakdown">Breakdown</option>
-                <option value="accident">Accident</option>
-                <option value="complaint">Complaint</option>
-                <option value="other">Other</option>
-              </select>
-              {errors.type && (
-                <p className="text-xs text-red-500 mt-1">{errors.type}</p>
-              )}
-            </div>
+        {/* Form card */}
+        <form onSubmit={handleSubmit} className={styles.card}>
+          {/* Section: Incident Details */}
+          <div className={styles.section}>
+            <p className={styles.sectionTitle}>
+              <span className={styles.sectionTitleDot} />
+              Incident Details
+            </p>
 
-            <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">
-                Severity <span className="text-red-500">*</span>
-              </label>
-              <select
-                value={severity}
-                onChange={(e) => setSeverity(e.target.value)}
-                className="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="P1">P1 — Critical</option>
-                <option value="P2">P2 — Major</option>
-                <option value="P3">P3 — Minor</option>
-              </select>
-              {errors.severity && (
-                <p className="text-xs text-red-500 mt-1">{errors.severity}</p>
-              )}
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">
-              Description <span className="text-red-500">*</span>
-            </label>
-            <textarea
-              value={description}
-              onChange={(e) => {
-                setDescription(e.target.value);
-                setErrors((p) => ({ ...p, description: undefined }));
-              }}
-              rows={4}
-              placeholder="Describe the incident in detail..."
-              className={`w-full text-sm border rounded-lg px-3 py-2 bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none ${errors.description ? "border-red-300" : "border-slate-200"}`}
-            />
-            {errors.description && (
-              <p className="text-xs text-red-500 mt-1">{errors.description}</p>
-            )}
-          </div>
-
-          {canPickDepot ? (
-            <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">
-                Depot <span className="text-red-500">*</span>
-              </label>
-              <select
-                value={depotId}
-                onChange={(e) => {
-                  setDepotId(e.target.value);
-                  setVehicleId("");
-                  setErrors((p) => ({ ...p, depotId: undefined }));
-                }}
-                className={`w-full text-sm border rounded-lg px-3 py-2 bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.depotId ? "border-red-300" : "border-slate-200"}`}
-              >
-                <option value="">Select depot...</option>
-                {depots.map((d) => (
-                  <option key={d.id} value={d.id}>
-                    {d.name}
-                  </option>
-                ))}
-              </select>
-              {errors.depotId && (
-                <p className="text-xs text-red-500 mt-1">{errors.depotId}</p>
-              )}
-            </div>
-          ) : (
-            <div>
-              <label className="block text-xs font-medium text-slate-600 mb-1">
-                Depot
-              </label>
-              <div className="text-sm text-slate-700 px-3 py-2 border border-slate-200 rounded-lg bg-slate-50">
-                {depots.find((d) => d.id === user.depot_id)?.name ??
-                  user.depot_id}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+              {/* Type */}
+              <div className={styles.formField}>
+                <label className={styles.label}>
+                  Type <span className={styles.required}>*</span>
+                </label>
+                <select
+                  value={type}
+                  onChange={(e) => setType(e.target.value)}
+                  className={`${styles.select} ${errors.type ? styles.selectError : ""}`}
+                >
+                  <option value="breakdown">Breakdown</option>
+                  <option value="accident">Accident</option>
+                  <option value="complaint">Complaint</option>
+                  <option value="other">Other</option>
+                </select>
+                {errors.type && (
+                  <p className={styles.fieldError}>{errors.type}</p>
+                )}
               </div>
             </div>
-          )}
 
-          <div>
-            <label className="block text-xs font-medium text-slate-600 mb-1">
-              Vehicle (optional)
-            </label>
-            <select
-              value={vehicleId}
-              onChange={(e) => setVehicleId(e.target.value)}
-              className="w-full text-sm border border-slate-200 rounded-lg px-3 py-2 bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="">— None / Not applicable —</option>
-              {depotVehicles.map((v) => (
-                <option key={v.id} value={v.id}>
-                  {v.reg_no} ({v.type})
-                </option>
-              ))}
-            </select>
+            {/* Severity tiles */}
+            <div className={styles.formField}>
+              <label className={styles.label}>
+                Severity <span className={styles.required}>*</span>
+              </label>
+              <div className={styles.severityTiles}>
+                {SEVERITY_OPTIONS.map((opt) => (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    onClick={() => setSeverity(opt.value)}
+                    className={`${styles.severityTile} ${opt.tileClass} ${severity === opt.value ? styles.severityTileSelected : ""}`}
+                  >
+                    <span className={styles.severityTileCode}>{opt.value}</span>
+                    <span className={styles.severityTileLabel}>
+                      {opt.label}
+                    </span>
+                  </button>
+                ))}
+              </div>
+              {errors.severity && (
+                <p className={styles.fieldError}>{errors.severity}</p>
+              )}
+            </div>
+
+            {/* Description */}
+            <div className={`${styles.formField} mt-5`}>
+              <label className={styles.label}>
+                Description <span className={styles.required}>*</span>
+              </label>
+              <textarea
+                value={description}
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                  setErrors((p) => ({ ...p, description: undefined }));
+                }}
+                rows={4}
+                placeholder="Describe the incident in detail…"
+                className={`${styles.textarea} ${errors.description ? styles.textareaError : ""}`}
+              />
+              {errors.description && (
+                <p className={styles.fieldError}>{errors.description}</p>
+              )}
+            </div>
           </div>
 
-          <div className="pt-2 flex gap-3">
+          {/* Section: Location & Vehicle */}
+          <div className={styles.section}>
+            <p className={styles.sectionTitle}>
+              <span className={styles.sectionTitleDot} />
+              Location &amp; Vehicle
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {/* Depot */}
+              <div className={styles.formField}>
+                <label className={styles.label}>
+                  Depot{" "}
+                  {canPickDepot && <span className={styles.required}>*</span>}
+                </label>
+                {canPickDepot ? (
+                  <>
+                    <select
+                      value={depotId}
+                      onChange={(e) => {
+                        setDepotId(e.target.value);
+                        setVehicleId("");
+                        setErrors((p) => ({ ...p, depotId: undefined }));
+                      }}
+                      className={`${styles.select} ${errors.depotId ? styles.selectError : ""}`}
+                    >
+                      <option value="">Select depot…</option>
+                      {depots.map((d) => (
+                        <option key={d.id} value={d.id}>
+                          {d.name}
+                        </option>
+                      ))}
+                    </select>
+                    {errors.depotId && (
+                      <p className={styles.fieldError}>{errors.depotId}</p>
+                    )}
+                  </>
+                ) : (
+                  <div className={styles.depotReadonly}>
+                    {depots.find((d) => d.id === user.depot_id)?.name ??
+                      user.depot_id}
+                  </div>
+                )}
+              </div>
+
+              {/* Vehicle */}
+              <div className={styles.formField}>
+                <label className={styles.label}>Vehicle (optional)</label>
+                <select
+                  value={vehicleId}
+                  onChange={(e) => setVehicleId(e.target.value)}
+                  className={styles.select}
+                >
+                  <option value="">— None / Not applicable —</option>
+                  {depotVehicles.map((v) => (
+                    <option key={v.id} value={v.id}>
+                      {v.reg_no} ({v.type})
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </div>
+
+          {/* Footer */}
+          <div className={styles.formFooter}>
             <button
               type="submit"
               disabled={submitting}
-              className="flex-1 px-4 py-2.5 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 disabled:opacity-60 transition-colors"
+              className={styles.btnSubmit}
             >
-              Raise Incident
+              {submitting ? "Submitting…" : "Raise Incident"}
             </button>
             <button
               type="button"
               onClick={() => navigate("/ims")}
-              className="px-4 py-2.5 rounded-lg border border-slate-200 text-slate-600 text-sm font-medium hover:bg-slate-50 transition-colors"
+              className={styles.btnCancel}
             >
               Cancel
             </button>

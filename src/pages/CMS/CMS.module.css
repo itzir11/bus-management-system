@@ -1,0 +1,467 @@
+/* ── Page shell ─────────────────────────────────────────────── */
+.page {
+  padding: var(--sp-6);
+}
+
+/* ── Page header ────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-6);
+  flex-wrap: wrap;
+}
+
+.pageTitle {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+}
+
+.pageSubtitle {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  margin-top: var(--sp-1);
+  font-family: var(--font-sans);
+}
+
+/* ── Buttons ────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  border: none;
+  transition: var(--transition);
+}
+
+.btnPrimary {
+  background: var(--primary);
+  color: var(--text-inverse);
+}
+
+.btnPrimary:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+}
+
+.btnSecondary {
+  background: var(--surface);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+
+.btnSecondary:hover {
+  background: var(--surface-raised);
+}
+
+/* ── Admin notice table card ────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  margin-bottom: var(--sp-4);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sp-5) var(--sp-6);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.cardTitle {
+  font-size: var(--text-md);
+  font-weight: 600;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.th {
+  padding: var(--sp-3) var(--sp-5);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  text-align: left;
+  background: var(--surface-raised);
+  border-bottom: 1px solid var(--border-light);
+  font-family: var(--font-sans);
+  white-space: nowrap;
+}
+
+.td {
+  padding: var(--sp-2) var(--sp-5);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  border-top: 1px solid var(--border-light);
+  font-family: var(--font-sans);
+  vertical-align: middle;
+}
+
+.tr {
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.tr:hover .td {
+  background: var(--surface-raised);
+}
+
+.trExpanded .td {
+  background: var(--primary-light);
+}
+
+/* ── Read receipts panel ────────────────────────────────────── */
+.receiptsPanel {
+  padding: var(--sp-5);
+  background: var(--surface-raised);
+  border-top: 1px solid var(--border-light);
+}
+
+.receiptsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--sp-3);
+  margin-top: var(--sp-3);
+}
+
+.receiptCard {
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+  padding: var(--sp-3) var(--sp-4);
+}
+
+.receiptName {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+}
+
+.receiptTime {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  margin-top: var(--sp-1);
+}
+
+.receiptUnread {
+  border-left: 3px solid var(--danger);
+}
+
+.receiptRead {
+  border-left: 3px solid var(--success);
+}
+
+/* ── Badges ─────────────────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px var(--sp-2);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  font-family: var(--font-sans);
+}
+
+.badgeAck {
+  background: var(--warning-muted);
+  color: var(--warning);
+}
+
+.badgeAudience {
+  background: var(--primary-muted);
+  color: var(--primary);
+}
+
+.badgeRead {
+  background: var(--success-muted);
+  color: var(--success);
+  gap: var(--sp-1);
+}
+
+.badgeUnread {
+  background: var(--surface-sunken);
+  color: var(--text-muted);
+}
+
+/* ── Driver notices view ────────────────────────────────────── */
+.noticeList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.noticeCard {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  padding: var(--sp-5) var(--sp-6);
+  cursor: pointer;
+  transition: var(--transition);
+  border-left: 4px solid transparent;
+}
+
+.noticeCard:hover {
+  box-shadow: var(--shadow);
+  transform: translateY(-1px);
+}
+
+.noticeCardUnread {
+  border-left-color: var(--primary);
+}
+
+.noticeCardRead {
+  border-left-color: var(--border-light);
+  opacity: 0.85;
+}
+
+.noticeTitle {
+  font-size: var(--text-md);
+  font-weight: 600;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  margin-bottom: var(--sp-2);
+}
+
+.noticeBody {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+}
+
+.noticeMeta {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-top: var(--sp-3);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+}
+
+.unreadDot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--primary);
+  flex-shrink: 0;
+}
+
+/* ── Modal ──────────────────────────────────────────────────── */
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--surface-overlay, rgba(15, 23, 42, 0.5));
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sp-4);
+}
+
+.modal {
+  background: var(--surface);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sp-5) var(--sp-6);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.modalTitle {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+}
+
+.modalBody {
+  padding: var(--sp-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+}
+
+.modalFooter {
+  padding: var(--sp-2) var(--sp-6);
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--sp-3);
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.label {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+}
+
+.input {
+  padding: var(--sp-3) var(--sp-4);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-base);
+  color: var(--text-primary);
+  background: var(--surface);
+  font-family: var(--font-sans);
+  transition: var(--transition-fast);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.inputError {
+  border-color: var(--danger);
+}
+
+.fieldError {
+  font-size: var(--text-xs);
+  color: var(--danger);
+  font-family: var(--font-sans);
+  margin-top: var(--sp-1);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.select {
+  appearance: none;
+  padding: var(--sp-3) var(--sp-4);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-base);
+  color: var(--text-primary);
+  background: var(--surface);
+  font-family: var(--font-sans);
+  cursor: pointer;
+}
+
+.select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.checkboxLabel {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+}
+
+.emptyState {
+  text-align: center;
+  padding: var(--sp-12);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-family: var(--font-sans);
+}
+
+/* ── Close button ───────────────────────────────────────────── */
+.closeBtn {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.closeBtn:hover {
+  background: var(--surface-raised);
+  color: var(--text-secondary);
+}
+
+/* ── Receipts label row ─────────────────────────────────────── */
+.receiptsLabel {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  margin-bottom: var(--sp-3);
+}
+
+/* ── Receipts table ─────────────────────────────────────────── */
+.receiptsTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.receiptsTh {
+  text-align: left;
+  padding-bottom: var(--sp-2);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.receiptsTd {
+  padding: var(--sp-2) 0;
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  border-top: 1px solid var(--border-light);
+}
+
+.receiptsTdMuted {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+}

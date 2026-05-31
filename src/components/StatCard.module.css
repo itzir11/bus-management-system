@@ -34,9 +34,7 @@
   font-family: var(--font-sans);
   font-weight: 500;
   margin-bottom: var(--sp-1);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1.4;
 }
 
 .value {
@@ -52,9 +50,7 @@
   color: var(--text-muted);
   font-family: var(--font-sans);
   margin-top: var(--sp-1);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1.4;
 }
 
 .trend {
@@ -74,5 +70,21 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  /* background and color are applied via inline style */
+}
+
+/* ── Mobile overrides ──────────────────────────────────────── */
+@media (max-width: 640px) {
+  .card {
+    padding: var(--sp-4);
+  }
+
+  .value {
+    font-size: var(--text-2xl);
+  }
+
+  .iconWrap {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+  }
 }

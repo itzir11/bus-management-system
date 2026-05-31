@@ -46,7 +46,7 @@
   border: 1px solid var(--warning-muted);
   border-left: 4px solid var(--warning);
   border-radius: var(--radius);
-  padding: var(--sp-4) var(--sp-5);
+  padding: var(--sp-2) var(--sp-5);
   margin-bottom: var(--sp-6);
   font-size: var(--text-sm);
   color: var(--text-secondary);
@@ -176,7 +176,7 @@
 }
 
 .td {
-  padding: var(--sp-4) var(--sp-6);
+  padding: var(--sp-2) var(--sp-6);
   font-size: var(--text-sm);
   color: var(--text-secondary);
   font-family: var(--font-sans);

@@ -221,23 +221,23 @@ export default function Sidebar({ isOpen, onClose }) {
               </svg>
             </div>
             <div className="flex flex-col leading-tight">
-              <span className="text-white font-bold text-sm tracking-wide select-none">
-                BMS
+              <span className="text-white font-semibold text-sm select-none">
+                Bus Management
               </span>
-              <span className="text-slate-400 text-[10px] leading-none tracking-wide select-none">
+              <span className="text-slate-500 text-[10px] leading-none select-none mt-0.5">
                 by Ishika Rohilla
               </span>
             </div>
           </div>
         </div>
 
-        <nav className="flex-1 overflow-y-auto py-4 space-y-5">
+        <nav className="flex-1 overflow-y-auto py-3 space-y-1">
           {visibleSections.map((section) => (
-            <div key={section.label}>
-              <p className="text-slate-500 text-[10px] font-semibold uppercase tracking-widest px-4 mb-1.5">
+            <div key={section.label} className="mb-4">
+              <p className="text-slate-600 text-[10px] font-semibold uppercase tracking-widest px-5 mb-1">
                 {section.label}
               </p>
-              <div className="space-y-0.5">
+              <div className="space-y-0.5 px-3">
                 {section.items.map((item) => (
                   <NavLink
                     key={item.path}
@@ -245,11 +245,11 @@ export default function Sidebar({ isOpen, onClose }) {
                     end={item.path === "/"}
                     onClick={onClose}
                     className={({ isActive }) =>
-                      `flex items-center gap-3 px-4 py-2.5 rounded-lg mx-3 text-sm font-medium transition-all duration-150
+                      `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150
                        ${
                          isActive
                            ? "bg-blue-600 text-white shadow-sm"
-                           : "text-slate-400 hover:text-white hover:bg-slate-800"
+                           : "text-slate-400 hover:text-white hover:bg-slate-800/70"
                        }`
                     }
                   >
@@ -263,20 +263,19 @@ export default function Sidebar({ isOpen, onClose }) {
         </nav>
 
         {user && (
-          <div className="px-3 py-3 border-t border-slate-800/60 shrink-0">
-            <div className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg hover:bg-slate-800/60 transition-colors cursor-default">
-              <div className="w-8 h-8 rounded-full bg-blue-600/20 text-blue-400 flex items-center justify-center text-xs font-semibold shrink-0 select-none border border-blue-500/20">
+          <div className="px-4 py-4 border-t border-slate-800/60 shrink-0">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-full bg-slate-700 text-slate-200 flex items-center justify-center text-xs font-bold shrink-0 select-none">
                 {getInitials(user.full_name)}
               </div>
               <div className="min-w-0 flex-1">
-                <p className="text-slate-200 text-xs font-medium truncate leading-tight">
+                <p className="text-slate-200 text-sm font-medium truncate leading-tight">
                   {user.full_name}
                 </p>
-                <p className="text-slate-500 text-[10px] truncate leading-tight">
+                <p className="text-slate-500 text-xs truncate leading-tight mt-0.5">
                   {user.username}
                 </p>
               </div>
-              <span className="text-slate-600 text-[10px] shrink-0">v1.0</span>
             </div>
           </div>
         )}

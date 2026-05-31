@@ -108,7 +108,7 @@
 }
 
 .td {
-  padding: var(--sp-4) var(--sp-5);
+  padding: var(--sp-2) var(--sp-5);
   font-size: var(--text-sm);
   color: var(--text-secondary);
   border-top: 1px solid var(--border-light);
@@ -314,7 +314,7 @@
 }
 
 .modalFooter {
-  padding: var(--sp-4) var(--sp-6);
+  padding: var(--sp-2) var(--sp-6);
   border-top: 1px solid var(--border-light);
   display: flex;
   justify-content: flex-end;
